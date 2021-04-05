@@ -13,13 +13,25 @@ class CreateUsersTable extends Migration
      */
     public function up()
     {
+        /**
+         * Any registered users should have a: 
+         *      username, 
+         *      password
+         * 
+         *      (You could include other information you think proper)
+         */
+
         Schema::create('users', function (Blueprint $table) {
             $table->id();
+
             $table->string('name');
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();
+
+            $table->enum('user_type',['public', 'staff'])->default('public'); // type of user profile (determines level of functionaility for the user on the website)
+
             $table->timestamps();
         });
     }
