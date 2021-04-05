@@ -31,7 +31,7 @@ class CreateAnimalsTable extends Migration
             $table->string('description', 256)->nullable(); // animal description
             $table->string('image', 256)->nullable(); // animal image
             $table->enum('availability',['available', 'unavailable'])->default('available'); // animal availability
-            $table->foreignId('user_id')->constrained('users'); // user who adopted the animal
+            $table->foreignId('user_id')->nullable()->constrained('users'); // user who adopted the animal
 
             $table->timestamps();
         });

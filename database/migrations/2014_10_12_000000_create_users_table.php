@@ -30,7 +30,9 @@ class CreateUsersTable extends Migration
             $table->string('password');
             $table->rememberToken();
 
-            $table->enum('user_type',['public', 'staff'])->default('public'); // type of user profile (determines level of functionaility for the user on the website)
+            $table->boolean('role')->default(0); // false = normal user, true = admin
+
+            //$table->enum('user_type',['public', 'staff'])->default('public'); // type of user profile (determines level of functionaility for the user on the website)
 
             $table->timestamps();
         });
