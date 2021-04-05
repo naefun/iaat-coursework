@@ -35,16 +35,26 @@
                     <ul class="navbar-nav mr-auto">
                         @guest
                         @else
+                            <!-- navigation for just the regular users -->
+                            @if(Auth::user()->role == false)
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ url('animals/create') }}">Create an adoption request</a>
+                                </li>
+
+                            <!-- navigation for just the admins -->
+                            @else
+                                <li class="nav-item">
+                                    <a class="nav-link" href="">Add animal to database</a>
+                                </li>
+
+                            @endif
+                            <!-- navigation that will show for all user types -->
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ url('animals') }}">List </a>
+                                <a class="nav-link" href="{{ url('animals') }}">View animals</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ url('animals/create') }}">Create </a>
+                                <a href="{{ route('display_adoptionrequests') }}" class="btn btnprimary">Display adoption requests </a>
                             </li>
-                            <li class="nav-item">
-                                <a href="{{ route('display_adoptionrequests') }}" class="btn btnprimary">Display Requests </a>
-                            </li>
-                            
                         @endguest
                     </ul>
 

@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Animal;
+
 
 class AnimalController extends Controller
 {
@@ -24,6 +26,7 @@ class AnimalController extends Controller
     public function create()
     {
         //
+        return view('animals.create');
     }
 
     /**
@@ -35,6 +38,44 @@ class AnimalController extends Controller
     public function store(Request $request)
     {
         //
+        // form validation
+        $animal = $this->validate(request(), [
+            'name' => 'required',
+            'date_of_birth' => 'required|date',
+            'user_id' => 'required|numeric',
+            'image' => 'sometimes|image|mimes:jpeg,png,jpg,gif,svg|max:500',
+        ]);
+
+        //Handles the uploading of the image
+        if ($request->hasFile('image')){
+            //Gets the filename with the extension
+            $fileNameWithExt = $request->file('image')->getClientOriginalName();
+            //just gets the filename
+            $filename = pathinfo($fileNameWithExt, PATHINFO_FILENAME);
+            //Just gets the extension
+            $extension = $request->file('image')->getClientOriginalExtension();
+            //Gets the filename to store
+            $fileNameToStore = $filename.'_'.time().'.'.$extension;
+            //Uploads the image
+            $path = $request->file('image')->storeAs('public/images', $fileNameToStore);
+        }
+        else {
+            $fileNameToStore = 'noimage.jpg';
+        }
+
+        // create a Vehicle object and set its values from the input
+        $animal = new Animal;
+        $animal->name = $request->input('name');
+        $animal->date_of_birth = $request->input('date_of_birth');
+        $animal->description = $request->input('description');
+        $animal->image = $fileNameToStore;
+        $animal->availability = $request->input('availability');
+        $animal->user_id = $request->input('user_id');
+        $animal->created_at = now();
+        // save the Vehicle object
+        $animal->save();
+        // generate a redirect HTTP response with a success message
+        return back()->with('success', 'Animal has been added');
     }
 
     /**
