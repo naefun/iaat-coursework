@@ -24,8 +24,8 @@ class CreateAdoptionRequestsTable extends Migration
         Schema::create('adoption_requests', function (Blueprint $table) {
             $table->id();
 
-            $table->foreignId('user_id')->constrained('users'); // user who made adoption request
-            $table->foreignId('animal_id')->constrained('animals'); // animal that the user is requesting to adopt
+            $table->foreignId('user_id')->constrained('users')->onDelete('cascade'); // user who made adoption request
+            $table->foreignId('animal_id')->constrained('animals')->onDelete('cascade'); // animal that the user is requesting to adopt
             $table->enum('request_status',['approved', 'denied', 'pending'])->default('pending'); // request status
 
             $table->timestamps();
