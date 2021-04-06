@@ -22,15 +22,19 @@
                                         <td>{{$animal['date_of_birth']}}</td>
                                         <td>{{$animal['availability']}}</td>
                                         <td><a href="{{route('animals.show', ['animal' => $animal['id'] ] )}}" class="btn btnprimary">Details</a></td>
-                                        <td><a href="{{ route('animals.edit', ['animal' => $animal['id']]) }}" class="btn btnwarning">Edit</a></td>
-                                        <td>
-                                            <form action="{{ action([App\Http\Controllers\AnimalController::class, 'destroy'],
-                                            ['animal' => $animal['id']]) }}" method="post">
-                                                @csrf
-                                                <input name="_method" type="hidden" value="DELETE">
-                                                <button class="btn btn-danger" type="submit"> Delete</button>
-                                            </form>
-                                        </td>
+                                        @if(Auth::user()->role == false)
+                                            <td><a href="{{ route('adoption_requests.create', ['animal' => $animal['id']]) }}" class="btn btnwarning">Create adoption request</a></td>
+                                        @else
+                                            <td><a href="{{ route('animals.edit', ['animal' => $animal['id']]) }}" class="btn btnwarning">Edit</a></td>
+                                            <td>
+                                                <form action="{{ action([App\Http\Controllers\AnimalController::class, 'destroy'],
+                                                ['animal' => $animal['id']]) }}" method="post">
+                                                    @csrf
+                                                    <input name="_method" type="hidden" value="DELETE">
+                                                    <button class="btn btn-danger" type="submit"> Delete</button>
+                                                </form>
+                                            </td>
+                                        @endif
                                     </tr>
                                 @endforeach
                             </tbody>

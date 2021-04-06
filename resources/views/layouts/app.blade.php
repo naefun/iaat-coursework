@@ -38,7 +38,7 @@
                             <!-- navigation for just the regular users -->
                             @if(Auth::user()->role == false)
                                 <li class="nav-item">
-                                    <a class="nav-link" href="">Create an adoption request</a>
+                                    <a href="{{ route('adoption_requests.create', ['animal' => $animal['id']]) }}" class="btn btnwarning">Create adoption request</a>
                                 </li>
 
                             <!-- navigation for just the admins -->
