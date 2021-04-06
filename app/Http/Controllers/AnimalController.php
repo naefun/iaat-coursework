@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Animal;
+use Gate;
 
 
 class AnimalController extends Controller
@@ -16,7 +17,10 @@ class AnimalController extends Controller
     public function index()
     {
         //
-        $animals = Animal::all()->toArray();
+        $animals = Animal::all();
+        if (Gate::denies('displayall')) {
+            $animals=$animals->where('availability', 'available');
+        }
         return view('animals.index', compact('animals'));
     }
 

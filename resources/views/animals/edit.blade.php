@@ -4,7 +4,7 @@
         <div class="row justify-content-center">
             <div class="col-md-8 ">
                 <div class="card">
-                    <div class="card-header">Edit and update the vehicle</div>
+                    <div class="card-header">Edit and update the vehicle</div> 
                     @if ($errors->any())
                         <div class="alert alert-danger">
                             <ul>

@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\AdoptionRequest;
+use App\Models\Animal;
+use Illuminate\Support\Facades\DB;
 use Gate;
 
 class AdoptionRequestController extends Controller
@@ -16,6 +18,11 @@ class AdoptionRequestController extends Controller
     public function index()
     {
         //
+        $adoptionRequestQuery = AdoptionRequest::all();
+        if (Gate::denies('displayall')) {
+            $adoptionRequestQuery=$adoptionRequestQuery->where('user_id', auth()->user()->id);
+        }
+        return view('adoption_requests.index', array('adoptionRequests'=>$adoptionRequestQuery));
     }
 
     /**
@@ -23,9 +30,11 @@ class AdoptionRequestController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $id)
     {
         //
+        $animal = Animal::find($id);
+        return view('adoption_requests.create',compact('animal'));
     }
 
     /**
@@ -37,6 +46,30 @@ class AdoptionRequestController extends Controller
     public function store(Request $request)
     {
         //
+        // form validation
+        $adoption_request = $this->validate(request(), [
+            'user_id' => 'required',
+            'animal_id' => 'required',
+        ]);
+
+        $existing_requests = DB::table('adoption_requests')->
+                where('user_id', auth()->user()->id)->
+                where('animal_id', $request->input('animal_id'))->
+                first();
+
+        if ($existing_requests === null) {
+            // create a Animal object and set its values from the input
+            $adoption_request = new AdoptionRequest;
+            $adoption_request->user_id = $request->input('user_id');
+            $adoption_request->animal_id = $request->input('animal_id');
+            $adoption_request->created_at = now();
+            // save the Vehicle object
+            $adoption_request->save();
+            // generate a redirect HTTP response with a success message
+            return back()->with('success', 'Adoption request has been added');
+        }
+        return back()->with('success', 'Adoption request not added, you have already requested to adopt this animal');
+
     }
 
     /**
@@ -86,11 +119,7 @@ class AdoptionRequestController extends Controller
 
     public function display()
     {
-        $adoptionRequestQuery = AdoptionRequest::all();
-        if (Gate::denies('displayall')) {
-            $adoptionRequestQuery=$adoptionRequestQuery->where('user_id', auth()->user()->id);
-        }
-        return view('/display', array('adoptionRequests'=>$adoptionRequestQuery));
+        // sdd
     }
 
 }

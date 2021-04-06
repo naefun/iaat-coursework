@@ -6,6 +6,7 @@ use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvid
 use Illuminate\Support\Facades\Gate;
 use App\Models\AdoptionRequest;
 use App\Models\User;
+use App\Models\Animal;
 
 class AuthServiceProvider extends ServiceProvider
 {
