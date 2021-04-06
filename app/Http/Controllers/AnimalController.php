@@ -100,6 +100,8 @@ class AnimalController extends Controller
     public function edit($id)
     {
         //
+        $animal = Animal::find($id);
+        return view('animals.edit',compact('animal'));
     }
 
     /**
@@ -112,6 +114,35 @@ class AnimalController extends Controller
     public function update(Request $request, $id)
     {
         //
+        $animal = Animal::find($id);
+        $this->validate(request(), [
+            'name' => 'required',
+            'availability' => 'required'
+        ]);
+        $animal->name = $request->input('name');
+        $animal->date_of_birth = $request->input('date_of_birth');
+        $animal->description = $request->input('description');
+        $animal->availability = $request->input('availability');
+        $animal->updated_at = now();
+
+        //Handles the uploading of the image
+        if ($request->hasFile('image')){
+            //Gets the filename with the extension
+            $fileNameWithExt = $request->file('image')->getClientOriginalName();
+            //just gets the filename
+            $filename = pathinfo($fileNameWithExt, PATHINFO_FILENAME);
+            //Just gets the extension
+            $extension = $request->file('image')->getClientOriginalExtension();
+            //Gets the filename to store
+            $fileNameToStore = $filename.'_'.time().'.'.$extension;
+            //Uploads the image
+            $path = $request->file('image')->storeAs('public/images', $fileNameToStore);
+        } else {
+            $fileNameToStore = 'noimage.jpg';
+        }
+        $animal->image = $fileNameToStore;
+        $animal->save();
+        return redirect('animals');
     }
 
     /**
