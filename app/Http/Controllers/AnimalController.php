@@ -16,6 +16,8 @@ class AnimalController extends Controller
     public function index()
     {
         //
+        $vehicles = Animal::all()->toArray();
+        return view('animals.index', compact('animals'));
     }
 
     /**
@@ -42,7 +44,6 @@ class AnimalController extends Controller
         $animal = $this->validate(request(), [
             'name' => 'required',
             'date_of_birth' => 'required|date',
-            'user_id' => 'required|numeric',
             'image' => 'sometimes|image|mimes:jpeg,png,jpg,gif,svg|max:500',
         ]);
 
@@ -63,14 +64,13 @@ class AnimalController extends Controller
             $fileNameToStore = 'noimage.jpg';
         }
 
-        // create a Vehicle object and set its values from the input
+        // create a Animal object and set its values from the input
         $animal = new Animal;
         $animal->name = $request->input('name');
         $animal->date_of_birth = $request->input('date_of_birth');
         $animal->description = $request->input('description');
         $animal->image = $fileNameToStore;
         $animal->availability = $request->input('availability');
-        $animal->user_id = $request->input('user_id');
         $animal->created_at = now();
         // save the Vehicle object
         $animal->save();

@@ -38,13 +38,13 @@
                             <!-- navigation for just the regular users -->
                             @if(Auth::user()->role == false)
                                 <li class="nav-item">
-                                    <a class="nav-link" href="{{ url('animals/create') }}">Create an adoption request</a>
+                                    <a class="nav-link" href="">Create an adoption request</a>
                                 </li>
 
                             <!-- navigation for just the admins -->
                             @else
                                 <li class="nav-item">
-                                    <a class="nav-link" href="">Add animal to database</a>
+                                    <a class="nav-link" href="{{ url('animals/create') }}">Add animal to database</a>
                                 </li>
 
                             @endif
