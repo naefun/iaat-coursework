@@ -40,6 +40,7 @@
                                 <label>Image</label>
                                 <input type="file" name="image" />
                             </div>
+                            {{--
                             <div class="col-md-8">
                                 <label>Animal availability</label>
                                 <select name="availability">
@@ -48,6 +49,7 @@
                                     <option value="unavailable">Unavailable</option>
                                 </select>
                             </div>
+                            --}}
                             <div class="col-md-6 col-md-offset-4">
                                 <input type="submit" class="btn btn-primary" />
                                 <input type="reset" class="btn btn-primary" />

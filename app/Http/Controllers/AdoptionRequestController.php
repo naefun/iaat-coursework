@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\AdoptionRequest;
 use App\Models\Animal;
+use App\Models\User;
 use Illuminate\Support\Facades\DB;
 use Gate;
 
@@ -18,11 +19,13 @@ class AdoptionRequestController extends Controller
     public function index()
     {
         //
-        $adoptionRequestQuery = AdoptionRequest::all();
+        $adoptionRequests = AdoptionRequest::all();
+        $people = User::all();
+        $animals = Animal::all();
         if (Gate::denies('displayall')) {
-            $adoptionRequestQuery=$adoptionRequestQuery->where('user_id', auth()->user()->id);
+            $adoptionRequests=$adoptionRequests->where('user_id', auth()->user()->id);
         }
-        return view('adoption_requests.index', array('adoptionRequests'=>$adoptionRequestQuery));
+        return view('adoption_requests.index', compact('adoptionRequests', 'people', 'animals'));
     }
 
     /**
@@ -92,6 +95,7 @@ class AdoptionRequestController extends Controller
     public function edit($id)
     {
         //
+
     }
 
     /**
@@ -104,6 +108,23 @@ class AdoptionRequestController extends Controller
     public function update(Request $request, $id)
     {
         //
+        $adoption_request = AdoptionRequest::find($id);
+        $this->validate(request(), [
+            'request_status' => 'required'
+        ]);
+        $adoption_request->request_status = $request->input('request_status');
+        $adoption_request->updated_at = now();
+
+        $adoption_request->save();
+
+        if($request->input('request_status') == 'approved'){
+            $requested_animal = Animal::find($adoption_request->animal_id);
+            $requested_animal->availability = "unavailable";
+            $requested_animal->user_id = $adoption_request->user_id;
+            $requested_animal->save();
+            return back()->with('success', 'Adoption request accepted');
+        }
+        return back()->with('success', 'Adoption request denied');
     }
 
     /**

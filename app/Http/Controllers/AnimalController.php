@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Animal;
+use App\Models\User;
 use Gate;
 
 
@@ -18,10 +19,11 @@ class AnimalController extends Controller
     {
         //
         $animals = Animal::all();
+        $people = User::all();
         if (Gate::denies('displayall')) {
             $animals=$animals->where('availability', 'available');
         }
-        return view('animals.index', compact('animals'));
+        return view('animals.index', compact('animals', 'people'));
     }
 
     /**
@@ -74,7 +76,7 @@ class AnimalController extends Controller
         $animal->date_of_birth = $request->input('date_of_birth');
         $animal->description = $request->input('description');
         $animal->image = $fileNameToStore;
-        $animal->availability = $request->input('availability');
+        //$animal->availability = $request->input('availability');
         $animal->created_at = now();
         // save the Vehicle object
         $animal->save();
@@ -92,7 +94,8 @@ class AnimalController extends Controller
     {
         //
         $animal = Animal::find($id);
-        return view('animals.show',compact('animal'));
+        $people = User::all();
+        return view('animals.show',compact('animal', 'people'));
     }
 
     /**
