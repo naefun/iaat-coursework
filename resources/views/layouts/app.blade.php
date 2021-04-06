@@ -35,6 +35,16 @@
                     <ul class="navbar-nav mr-auto">
                         @guest
                         @else
+                            <!-- navigation that will show for all user types -->
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ url('home') }}">Home</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ url('animals') }}">View animals</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{ url('adoption_requests') }}" class="btn btnprimary">Display adoption requests </a>
+                            </li>
                             <!-- navigation for just the regular users -->
                             @if(Auth::user()->role == false)
 
@@ -45,13 +55,6 @@
                                 </li>
 
                             @endif
-                            <!-- navigation that will show for all user types -->
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ url('animals') }}">View animals</a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="{{ url('adoption_requests') }}" class="btn btnprimary">Display adoption requests </a>
-                            </li>
                         @endguest
                     </ul>
 

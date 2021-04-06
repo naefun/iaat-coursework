@@ -46,13 +46,11 @@
                             
                             <input type="number" name="animal_id" placeholder="Animal name" value="{{ $animal->first()->id }}" hidden />
                             <input type="number" name="user_id" placeholder="Animal name" value="{{ Auth::user()->id }}" hidden />
-                            <p>user id: {{ Auth::user()->id }} </p>
-                            <p>animal id: {{ $animal->first()->id }} </p>
-
 
                             <div class="col-md-6 col-md-offset-4">
                                 <input type="submit" class="btn btn-primary" value="Submit adoption request"/>
                             </div>
+                            <a href="{{route('animals.index')}}" class="btn btn-primary" role="button">Back to the list</a>
                         </form>
                     </div>
                 </div>

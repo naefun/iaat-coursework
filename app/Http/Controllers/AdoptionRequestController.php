@@ -52,12 +52,12 @@ class AdoptionRequestController extends Controller
             'animal_id' => 'required',
         ]);
 
-        $existing_requests = DB::table('adoption_requests')->
+        $existing_request = DB::table('adoption_requests')->
                 where('user_id', auth()->user()->id)->
                 where('animal_id', $request->input('animal_id'))->
                 first();
 
-        if ($existing_requests === null) {
+        if ($existing_request === null) {
             // create a Animal object and set its values from the input
             $adoption_request = new AdoptionRequest;
             $adoption_request->user_id = $request->input('user_id');
@@ -115,11 +115,15 @@ class AdoptionRequestController extends Controller
     public function destroy($id)
     {
         //
+        $adoptionRequest = AdoptionRequest::find($id);
+        $adoptionRequest->delete();
+        return redirect('adoption_requests');
     }
 
     public function display()
     {
         // sdd
+        
     }
 
 }

@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\AdoptionRequest;
+use App\Models\Animal;
+use Gate;
 
 class HomeController extends Controller
 {
@@ -23,6 +26,10 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        $homeInformation = AdoptionRequest::all()->where('request_status', 'pending');
+        if (Gate::denies('displayall')) {
+            $homeInformation=Animal::all()->where('availability', 'available');
+        }
+        return view('home', array('homeInformation'=>$homeInformation));
     }
 }

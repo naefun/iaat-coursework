@@ -23,7 +23,15 @@
                                         <td> {{$adoptionRequest->id}} </td>
                                         <td> {{$adoptionRequest->user_id}} </td>
                                         <td> {{$adoptionRequest->animal_id}} </td>
-                                        <td> {{$adoptionRequest->request_status}} </td>
+                                        <td> {{$adoptionRequest->request_status}} </td> 
+                                        <td>
+                                            <form action="{{ action([App\Http\Controllers\AdoptionRequestController::class, 'destroy'],
+                                            ['adoption_request' => $adoptionRequest['id']]) }}" method="post">
+                                                @csrf
+                                                <input name="_method" type="hidden" value="DELETE">
+                                                <button class="btn btn-danger" type="submit"> Delete</button>
+                                            </form>
+                                        </td>
                                     </tr>
                                 @endforeach
                             </tbody>
