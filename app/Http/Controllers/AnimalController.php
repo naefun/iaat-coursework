@@ -16,7 +16,7 @@ class AnimalController extends Controller
     public function index()
     {
         //
-        $vehicles = Animal::all()->toArray();
+        $animals = Animal::all()->toArray();
         return view('animals.index', compact('animals'));
     }
 
@@ -87,6 +87,8 @@ class AnimalController extends Controller
     public function show($id)
     {
         //
+        $animal = Animal::find($id);
+        return view('animals.show',compact('animal'));
     }
 
     /**
