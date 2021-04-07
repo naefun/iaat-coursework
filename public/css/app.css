@@ -2,3 +2,92 @@
     font-family: 'Open Sans', sans-serif;
     list-style: none;
 }
+
+.nav-main{
+
+}
+.nav-container{
+    padding: 1em;
+    background: rgb(209, 209, 209);
+}
+.nav-sections{
+    display: flex;
+    justify-content: space-between;
+}
+.nav-list{
+    display: flex;
+    gap: 2em;
+    padding: 0;
+}
+.nav-text{
+    margin: 0;;
+}
+
+
+
+.main{
+    padding: 0 10vw 0 10vw;
+}
+.row{
+    width: 100%;
+}
+.justify-content-center{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.card{
+    width: 100%;
+}
+.card-header{
+    font-size: 2em;
+    padding: 0.5em;
+}
+.card-body{
+    width: 100%;
+}
+.alert{
+    padding: 0 1em 0 1em;
+    border-radius: 5px;
+}
+.alert-nosuccess{
+    background-color: rgb(209, 77, 77);
+}
+.alert-success{
+    background-color: rgb(81, 209, 77);
+}
+
+table{
+    border: 2px #000 solid;
+    padding: 2em;
+    max-width: 70%;
+}
+.show-table tr{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 2em;
+}
+.end-text{
+    text-align: end;
+}
+.show-table tbody{
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+    flex-grow: 1;
+    width:100%;
+}
+.half-width{
+    width: 50%;
+}
+.full-width{
+    max-width:100%
+}
+.full-height{
+    max-height:100%
+}
+.center-text{
+    text-align: center;
+}

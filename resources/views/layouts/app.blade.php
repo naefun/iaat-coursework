@@ -24,15 +24,15 @@
 </head>
 <body>
     <div id="app">
-        <nav class="">
-            <div class="container">
+        <nav class="nav-main">
+            <div class="nav-container">
                 <a class="navbar-brand" href="{{ url('/') }}">
                     {{ config('app.name', 'Aston Animal Sanctuary') }}
                 </a>
 
-                <div class="" id="">
+                <div class="nav-sections" id="">
                     <!-- Left Side Of Navbar -->
-                    <ul class="">
+                    <ul class="nav-list">
                         @guest
                         @else
                             <!-- navigation that will show for all user types -->
@@ -58,7 +58,7 @@
                     </ul>
 
                     <!-- Right Side Of Navbar -->
-                    <ul class="navbar-nav">
+                    <ul class="nav-list">
                         <!-- Authentication Links -->
                         @guest
                             @if (Route::has('login'))
@@ -73,7 +73,7 @@
                                 </li>
                             @endif
                         @else
-                            <li class="nav-item"><p>Welcome {{ Auth::user()->name }}</p></li>
+                            <li class="nav-item"><p class="nav-text">Welcome {{ Auth::user()->name }}</p></li>
                             <li class="nav-item">
                                 <a class="dropdown-item" href="{{ route('logout') }}"
                                     onclick="event.preventDefault();
@@ -90,7 +90,7 @@
             </div>
         </nav>
 
-        <main class="py-4">
+        <main class="main">
             @yield('content')
         </main>
     </div>

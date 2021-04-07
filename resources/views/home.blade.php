@@ -13,6 +13,18 @@
                             {{ session('status') }}
                         </div>
                     @endif
+
+                    <!-- display the success status -->
+                    @if (\Session::has('success'))
+                        <div class="alert alert-success">
+                            <p>{{ \Session::get('success') }}</p>
+                        </div><br />
+                    @elseif (\Session::has('nosuccess'))
+                        <div class="alert alert-nosuccess">
+                            <p>{{ \Session::get('nosuccess') }}</p>
+                        </div><br />
+                    @endif
+
                     <table>
                         {{ __('You are logged in!') }}
                         {{-- if the user is a regular user --}}

@@ -71,7 +71,7 @@ class AdoptionRequestController extends Controller
             // generate a redirect HTTP response with a success message
             return back()->with('success', 'Adoption request has been added');
         }
-        return back()->with('success', 'Adoption request not added, you have already requested to adopt this animal');
+        return back()->with('nosuccess', 'Adoption request not added, you have already requested to adopt this animal');
 
     }
 
