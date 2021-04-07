@@ -112,6 +112,10 @@ class AdoptionRequestController extends Controller
         $this->validate(request(), [
             'request_status' => 'required'
         ]);
+        // stop request from being approved if the animal is already adopted
+        if(Animal::find($adoption_request->animal_id)->availability == 'unavailable' && $request->input('request_status') == 'approved'){
+            return back()->with('success', 'Adoption request cannot be accepted, this animal has already been adopted');
+        }
         $adoption_request->request_status = $request->input('request_status');
         $adoption_request->updated_at = now();
 
