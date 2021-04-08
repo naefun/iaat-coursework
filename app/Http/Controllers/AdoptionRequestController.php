@@ -114,7 +114,7 @@ class AdoptionRequestController extends Controller
         ]);
         // stop request from being approved if the animal is already adopted
         if(Animal::find($adoption_request->animal_id)->availability == 'unavailable' && $request->input('request_status') == 'approved'){
-            return back()->with('success', 'Adoption request cannot be accepted, this animal has already been adopted');
+            return back()->with('nosuccess', 'Adoption request cannot be accepted, this animal has already been adopted');
         }
         $adoption_request->request_status = $request->input('request_status');
         $adoption_request->updated_at = now();
@@ -126,9 +126,9 @@ class AdoptionRequestController extends Controller
             $requested_animal->availability = "unavailable";
             $requested_animal->user_id = $adoption_request->user_id;
             $requested_animal->save();
-            return back()->with('success', 'Adoption request accepted');
+            return back()->with('success', 'Adoption request successfully accepted');
         }
-        return back()->with('success', 'Adoption request denied');
+        return back()->with('success', 'Adoption request successfully denied');
     }
 
     /**

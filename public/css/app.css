@@ -3,26 +3,53 @@
     list-style: none;
 }
 
-.nav-main{
+.flex-row{
+    display: flex;
+    flex-direction: row;
+}
+.flex-col{
+    display: flex;
+    flex-direction: column;
+}
 
+.nav-main{
+    /*background-image:url('../images/astonuni.jpg');*/
+    background-image: url("../images/astonuni.jpg");
+    background-image: linear-gradient(rgba(0,0,0,0.7),rgba(0,0,0,0.7)),url("../images/astonuni.jpg");
+    background-position: center;
+    background-size: cover;
+}
+.navbar-brand{
+    font-size: 2.2em;
+    color: rgb(230, 230, 230);
+    text-decoration: none;
 }
 .nav-container{
-    padding: 1em;
-    background: rgb(209, 209, 209);
+    padding: 1em 20%;
 }
 .nav-sections{
     display: flex;
     justify-content: space-between;
 }
+.nav-sections a{
+    font-size: 1.2em;
+    text-decoration: none;
+    color: rgb(230, 230, 230);
+}
+.nav-sections a:hover{
+    color: rgb(247, 92, 92);
+}
 .nav-list{
     display: flex;
     gap: 2em;
     padding: 0;
+    margin: 1em 0 0 0;
 }
 .nav-text{
-    margin: 0;;
+    margin: 0;
+    color: rgb(187, 151, 179);
+    font-weight: 700;
 }
-
 
 
 .main{
@@ -48,20 +75,33 @@
     width: 100%;
 }
 .alert{
-    padding: 0 1em 0 1em;
+    padding: 1em;
     border-radius: 5px;
+}
+.alert p{
+    margin: 0;
 }
 .alert-nosuccess{
     background-color: rgb(209, 77, 77);
+    border: rgb(139, 49, 49) solid 2px;
 }
 .alert-success{
     background-color: rgb(81, 209, 77);
+    border: rgb(48, 109, 46) solid 2px;
 }
 
+th,td{
+    padding: 0.4em 0.5em;
+}
 table{
     border: 2px #000 solid;
     padding: 2em;
     max-width: 70%;
+    max-height: 100%;
+}
+table:not(.show-table) tr:hover {
+    font-weight: bold;
+    cursor: default;
 }
 .show-table tr{
     display: flex;
@@ -69,15 +109,15 @@ table{
     justify-content: center;
     gap: 2em;
 }
-.end-text{
-    text-align: end;
-}
 .show-table tbody{
     display: flex;
     flex-direction: column;
     gap: 1em;
     flex-grow: 1;
     width:100%;
+}
+.end-text{
+    text-align: end;
 }
 .half-width{
     width: 50%;
@@ -90,4 +130,51 @@ table{
 }
 .center-text{
     text-align: center;
+}
+.action-buttons{
+    gap: 1em;
+}
+.btn{
+    border: none;
+    padding: 0.6em;
+    border-radius: 5px;
+    cursor: pointer;
+    text-decoration: none;
+    background: rgb(223, 223, 223);
+}
+.green-button{
+    background: rgb(81, 209, 77);
+    border: rgb(48, 109, 46) solid 2px;
+}
+.green-button:hover{
+
+}
+.red-button{
+    background: rgb(209, 77, 77);
+    border: rgb(139, 49, 49) solid 2px;
+}
+.table-button{
+    padding: 0 0.5em;
+    border: #000 1px solid;
+}
+.request-status{
+    display: flex;
+    gap: 0.5em;
+    align-items: center;
+    justify-content: space-between;
+}
+.status-circle{
+    width: .5em;
+    height: .5em;
+    padding: 0;
+    margin: 0;
+    background: #fff;
+    border-radius: 100%;
+    border: #000 solid 1px;
+}
+.green-circle{
+    background: rgb(81, 209, 77);
+}
+.red-circle{
+    background: rgb(209, 77, 77);
 }
