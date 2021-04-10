@@ -26,10 +26,10 @@
                         <tr> <td class="full-width"><img class="full-width full-height"
                             src="{{ asset('storage/images/'.$animal->image)}}"></td></tr>
                     </table>
-                    <div>
-                        <a href="{{route('animals.index')}}" class="btn btn-primary" role="button">Back to the list</a>
+                    <div class="button-group">
+                        <a href="{{route('animals.index')}}" class="btn plain-button" role="button">Back to the list</a>
                         @if(Auth::user()->role == false)
-                            <a href="{{ route('adoption_requests.create', ['animal' => $animal['id']]) }}" class="btn btnwarning">Create adoption request</a>
+                            <a href="{{ route('adoption_requests.create', ['animal' => $animal['id']]) }}" class="btn plain-button">Create adoption request</a>
                         @else
                             {{--
                             <td><a href="{{ route('animals.edit', ['animal' => $animal['id']]) }}" class="btn btnwarning">Edit</a></td>
