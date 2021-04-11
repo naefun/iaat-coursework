@@ -8,7 +8,7 @@
                 <div class="card-header">Animal details</div>
 
                 <div class="card-body justify-content-center">
-                    <table class="table show-table">
+                    <table class="show-table table table-striped">
                         <tr> <th class="end-text half-width">Animal name </th> <td class="half-width"> {{$animal['name']}}</td></tr>
                         <tr> <th class="end-text half-width">Animal date of birth </th> <td class="half-width">{{$animal->date_of_birth}}</td></tr>
                         <tr> <th class="end-text half-width">Animal availability </th> <td class="half-width">{{$animal->availability}}</td></tr>
@@ -22,7 +22,7 @@
                                 @endforeach
                             </td>
                         </tr>
-                        <tr> <th class="center-text">Notes </th></tr><tr> <td class="table-description">{{$animal->description}}</td></tr>
+                        <tr class="justify-content-center animal-description"> <th class="center-text">Notes </th><td class="table-description center-text">{{$animal->description}}</td></tr>
                         <tr> <td class="full-width"><img class="full-width full-height"
                             src="{{ asset('storage/images/'.$animal->image)}}"></td></tr>
                     </table>

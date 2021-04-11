@@ -5,23 +5,23 @@
 
             <div class="card justify-content-center">
 
-                <div class="card-header">Display all animals</div>
+                <div class="card-header">Animals</div>
 
-                <div class="card-body justify-content-center">
-                    <table class="table">
+                <div class="card-body justify-content-center table-responsive">
+                    <table class="table table-striped table-hover">
                         <thead>
                             <tr>
-                                <th>Name</th>
-                                <th>DOB</th>
-                                <th>Availability</th>
+                                <th scope="col">Name</th>
+                                <th scope="col">DOB</th>
+                                <th scope="col">Availability</th>
                                 @if(Auth::user()->role == true)<th>Owner</th>@endif
-                                <th colspan="3">Action</th>
+                                <th scope="col">Action</th>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach($animals as $animal)
                                 <tr> 
-                                    <td>{{$animal['name']}}</td>
+                                    <th scope="row">{{$animal['name']}}</th>
                                     <td>{{$animal['date_of_birth']}}</td>
                                     <td>{{$animal['availability']}}</td>
                                     @if(Auth::user()->role == true)

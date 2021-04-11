@@ -25,69 +25,71 @@
 </head>
 <body>
     <div id="app">
-        <nav class="nav-main">
-            <div class="nav-container">
-                <a class="navbar-brand" href="{{ url('/') }}">
-                    {{ config('app.name', 'Aston Animal Sanctuary') }}
-                </a>
+        <nav class="nav-main navbar navbar-expand-lg navbar-dark bg-dark">
+            <a class="navbar-brand" href="{{ url('/') }}">
+                {{ config('app.name', 'Aston Animal Sanctuary') }}
+            </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#main-navbar-toggle" aria-controls="main-navbar-toggle" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
 
-                <div class="nav-sections" id="">
-                    <!-- Left Side Of Navbar -->
-                    <ul class="nav-list">
-                        @guest
+
+            <div class="nav-sections collapse navbar-collapse" id="main-navbar-toggle">
+                <!-- Left Side Of Navbar -->
+                <ul class="nav-list navbar-nav mr-auto mt-2 mt-lg-0">
+                    @guest
+                    @else
+                        <li class="nav-item"><p class="nav-text">Welcome {{ Auth::user()->name }}</p></li>
+                        <!-- navigation that will show for all user types -->
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ url('home') }}">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ url('animals') }}">Animals</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ url('adoption_requests') }}">Adoption requests </a>
+                        </li>
+                        <!-- navigation for just the regular users -->
+                        @if(Auth::user()->role == false)
+
+                        <!-- navigation for just the admins -->
                         @else
-                            <!-- navigation that will show for all user types -->
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ url('home') }}">Home</a>
+                                <a class="nav-link" href="{{ url('animals/create') }}">Add animal</a>
                             </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ url('animals') }}">Animals</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ url('adoption_requests') }}">Adoption requests </a>
-                            </li>
-                            <!-- navigation for just the regular users -->
-                            @if(Auth::user()->role == false)
+                        @endif
+                    @endguest
 
-                            <!-- navigation for just the admins -->
-                            @else
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ url('animals/create') }}">Add animal</a>
-                                </li>
-                            @endif
-                        @endguest
-                    </ul>
 
-                    <!-- Right Side Of Navbar -->
-                    <ul class="nav-list">
-                        <!-- Authentication Links -->
-                        @guest
-                            @if (Route::has('login'))
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
-                                </li>
-                            @endif
-                            
-                            @if (Route::has('register'))
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
-                                </li>
-                            @endif
-                        @else
-                            <li class="nav-item"><p class="nav-text">Welcome {{ Auth::user()->name }}</p></li>
+                <!-- Right Side Of Navbar -->
+
+                    <!-- Authentication Links -->
+                    @guest
+                        @if (Route::has('login'))
                             <li class="nav-item">
-                                <a class="dropdown-item" href="{{ route('logout') }}"
-                                    onclick="event.preventDefault();
-                                                    document.getElementById('logout-form').submit();">
-                                    {{ __('Logout') }}
-                                </a>
-                                <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                                    @csrf
-                                </form>
+                                <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
                             </li>
-                        @endguest
-                    </ul>
-                </div>
+                        @endif
+                        
+                        @if (Route::has('register'))
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
+                            </li>
+                        @endif
+                    @else
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('logout') }}"
+                                onclick="event.preventDefault();
+                                                document.getElementById('logout-form').submit();">
+                                {{ __('Logout') }}
+                            </a>
+                            <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                @csrf
+                            </form>
+                        </li>
+                    @endguest
+                </ul>
             </div>
         </nav>
 

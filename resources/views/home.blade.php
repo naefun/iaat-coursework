@@ -26,72 +26,81 @@
                     </div><br />
                 @endif
 
-                <table>
+                <table class="table table-striped table-hover">
                     {{-- if the user is a regular user --}}
                     @if(Auth::user()->role == false)
                         <thead>
                             <tr>
-                                <th>Name</th>
-                                <th>DOB</th>
-                                <th>Availability</th>
-                                <th colspan="3">Action</th>
+                                <th scope="col">Name</th>
+                                <th scope="col">DOB</th>
+                                <th scope="col">Availability</th>
+                                <th scope="col">Action</th>
                             </tr>
                         </thead>
-                        @foreach($homeInformation as $info)
-                                <tr>
-                                    <td>{{$info['name']}}</td>
-                                    <td>{{$info['date_of_birth']}}</td>
-                                    <td>{{$info['availability']}}</td>
-                                    <td><a href="{{ route('animals.show', ['animal' => $info['id'] ] ) }}" class="btn table-button">Details</a></td>
-                                    <td><a href="{{ route('adoption_requests.create', ['animal' => $info['id']]) }}" class="btn table-button">Create adoption request</a></td>
-                                </tr>
-                        @endforeach
+                        <tbody>
+                            @foreach($homeInformation as $info)
+                                    <tr>
+                                        <td scope="row">{{$info['name']}}</td>
+                                        <td>{{$info['date_of_birth']}}</td>
+                                        <td>{{$info['availability']}}</td>
+                                        <td>
+                                            <a href="{{ route('animals.show', ['animal' => $info['id'] ] ) }}" class="btn table-button">Details</a>
+                                            <a href="{{ route('adoption_requests.create', ['animal' => $info['id']]) }}" class="btn table-button">Create adoption request</a>
+                                        </td>
+                                    </tr>
+                            @endforeach
+                        </tbody>
                     {{-- if the user is an admin --}}
                     @else
                         <thead>
                             <tr>
-                                <th> Requesters name</th><th> Animal name</th><th> Request status</th><th> Actions</th>
+                                <th scope="col"> Requesters name</th>
+                                <th scope="col"> Animal name</th>
+                                <th scope="col"> Request status</th>
+                                <th scope="col"> Actions</th>
                             </tr>
                         </thead>
-                        @foreach($homeInformation as $info)
-                            <tr>
-                                @foreach($people as $person)
-                                    @if($person->id == $info->user_id)
-                                        <td> {{$person->name}} </td>
-                                    @endif
-                                @endforeach
-                                @foreach($animals as $animal)
-                                    @if($animal->id == $info->animal_id)
-                                        <td> {{$animal->name}} </td>
-                                    @endif
-                                @endforeach
-                                <td> {{$info->request_status}} </td> 
-                                <td class="flex-row action-buttons"> 
-                                    <form action="{{ action([App\Http\Controllers\AdoptionRequestController::class, 'update'],
-                                    ['adoption_request' => $info['id']]) }}" method="post"> 
-                                        @method('PATCH')
-                                        @csrf
-                                        <input name="request_status" type="hidden" value="approved">
-                                        <button class="btn green-button" type="submit">Accept</button>
-                                    </form>
-                                    <form action="{{ action([App\Http\Controllers\AdoptionRequestController::class, 'update'],
-                                    ['adoption_request' => $info['id']]) }}" method="post"> 
-                                        @method('PATCH')
-                                        @csrf
-                                        <input name="request_status" type="hidden" value="denied">
-                                        <button class="btn red-button" type="submit">Deny</button>
-                                    </form>
-                                    {{--
-                                    <form action="{{ action([App\Http\Controllers\AdoptionRequestController::class, 'destroy'],
-                                    ['adoption_request' => $info['id']]) }}" method="post">
-                                        @csrf
-                                        <input name="_method" type="hidden" value="DELETE">
-                                        <button class="btn btn-danger" type="submit"> Delete</button>
-                                    </form>
-                                    --}}
-                                </td>
-                            </tr>
-                        @endforeach
+                        <tbody>
+                            @foreach($homeInformation as $info)
+                                <tr>
+                                    @foreach($people as $person)
+                                        @if($person->id == $info->user_id)
+                                            <th scope="row"> {{$person->name}} </th>
+                                        @endif
+                                    @endforeach
+                                    @foreach($animals as $animal)
+                                        @if($animal->id == $info->animal_id)
+                                            <td> {{$animal->name}} </td>
+                                        @endif
+                                    @endforeach
+                                    <td> {{$info->request_status}} </td> 
+                                    <td class="flex-row action-buttons"> 
+                                        <form action="{{ action([App\Http\Controllers\AdoptionRequestController::class, 'update'],
+                                        ['adoption_request' => $info['id']]) }}" method="post"> 
+                                            @method('PATCH')
+                                            @csrf
+                                            <input name="request_status" type="hidden" value="approved">
+                                            <button class="btn green-button" type="submit">Accept</button>
+                                        </form>
+                                        <form action="{{ action([App\Http\Controllers\AdoptionRequestController::class, 'update'],
+                                        ['adoption_request' => $info['id']]) }}" method="post"> 
+                                            @method('PATCH')
+                                            @csrf
+                                            <input name="request_status" type="hidden" value="denied">
+                                            <button class="btn red-button" type="submit">Deny</button>
+                                        </form>
+                                        {{--
+                                        <form action="{{ action([App\Http\Controllers\AdoptionRequestController::class, 'destroy'],
+                                        ['adoption_request' => $info['id']]) }}" method="post">
+                                            @csrf
+                                            <input name="_method" type="hidden" value="DELETE">
+                                            <button class="btn btn-danger" type="submit"> Delete</button>
+                                        </form>
+                                        --}}
+                                    </td>
+                                </tr>
+                            @endforeach
+                        </tbody>
                     @endif
                 </table>
             </div>

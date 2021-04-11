@@ -12,10 +12,12 @@
                             {{ session('status') }}
                         </div>
                     @endif
-                    <table class="table table-striped table-bordered table-hover">
+                    <table class="table table-striped table-hover">
                         <thead>
                             <tr>
-                                <th> Requesters name</th><th> Animal name</th><th> Request status</th>
+                                <th scope="col"> Requesters name</th>
+                                <th scope="col"> Animal name</th>
+                                <th scope="col"> Request status</th>
                                 {{--@if(Auth::user()->role == true)<th> Actions</th>@endif--}}
                             </tr>
                         </thead>
@@ -24,7 +26,7 @@
                                 <tr>
                                     @foreach($people as $person)
                                         @if($person->id == $adoptionRequest->user_id)
-                                            <td> {{$person->name}} </td>
+                                            <th scope="row"> {{$person->name}} </th>
                                         @endif
                                     @endforeach
                                     @foreach($animals as $animal)
