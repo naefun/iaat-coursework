@@ -7,6 +7,7 @@ use App\Models\Animal;
 use App\Models\User;
 use Gate;
 use Auth;
+use DB;
 
 
 class AnimalController extends Controller
@@ -25,10 +26,11 @@ class AnimalController extends Controller
         }
         $animals = Animal::all();
         $people = User::all();
+        $animalTypes = Animal::getAnimalTypes();
         if (Gate::denies('displayall')) {
             $animals=$animals->where('availability', 'available');
         }
-        return view('animals.index', compact('animals', 'people'));
+        return view('animals.index', compact('animals', 'people', 'animalTypes'));
     }
 
     /**
@@ -43,7 +45,10 @@ class AnimalController extends Controller
             // The user is logged in...
             return redirect('login');
         }
-        return view('animals.create');
+        // gathers all enum options for the animal type so they can be used to generate the options on the form
+        $values = Animal::getAnimalTypes();
+
+        return view('animals.create',compact('values'));
     }
 
     /**
@@ -64,6 +69,7 @@ class AnimalController extends Controller
             'name' => 'required',
             'date_of_birth' => 'required|date',
             'image' => 'sometimes|image|mimes:jpeg,png,jpg,gif,svg|max:500',
+            'animal_type' => 'required',
         ]);
 
         //Handles the uploading of the image
@@ -87,6 +93,7 @@ class AnimalController extends Controller
         $animal = new Animal;
         $animal->name = $request->input('name');
         $animal->date_of_birth = $request->input('date_of_birth');
+        $animal->type = $request->input('animal_type');
         $animal->description = $request->input('description');
         $animal->image = $fileNameToStore;
         //$animal->availability = $request->input('availability');

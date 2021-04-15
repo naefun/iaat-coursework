@@ -85,6 +85,7 @@ body{
 .alert{
     padding: 1em;
     border-radius: 5px;
+    text-align: center;
 }
 .alert p{
     margin: 0;
@@ -97,6 +98,10 @@ body{
     background-color: rgb(81, 209, 77);
     border: rgb(48, 109, 46) solid 2px;
 }
+.alert ul{
+    padding: 0;
+    margin: 0;
+}
 
 th,td{
     padding: 0.4em 0.5em;
@@ -106,6 +111,7 @@ table{
     max-width: 70%;
     max-height: 100%;
     box-shadow: 0px 0px 10px 5px rgb(0, 0, 0, 20%);
+    margin: 1em 0;
 }
 table:not(.show-table) tr:hover {
     font-weight: bold;
@@ -211,27 +217,30 @@ table:not(.show-table) tr:hover {
     cursor: pointer;
   }
   
-  .table-sortable .th-sort-asc::after {
-    content: "\25b4";
-  }
-  
-  .table-sortable .th-sort-desc::after {
-    content: "\25be";
-  }
-  
-  .table-sortable .th-sort-asc::after,
-  .table-sortable .th-sort-desc::after {
-    margin-left: 5px;
-  }
-  
-  .table-sortable .th-sort-asc,
-  .table-sortable .th-sort-desc {
-    background: rgba(0, 0, 0, 0.1);
-  }
-  #no-sort{
-      cursor: default;
-  }
-  .search-box{
-      margin: 0 0 1em 0;
-      max-width: 70%;
-  }
+.table-sortable .th-sort-asc::after {
+content: "\25b4";
+}
+
+.table-sortable .th-sort-desc::after {
+content: "\25be";
+}
+
+.table-sortable .th-sort-asc::after,
+.table-sortable .th-sort-desc::after {
+margin-left: 5px;
+}
+
+.table-sortable .th-sort-asc,
+.table-sortable .th-sort-desc {
+background: rgba(0, 0, 0, 0.1);
+}
+#no-sort{
+    cursor: default;
+}
+.search-box{
+    max-width: 70%;
+}
+.input-group{
+    width:70%;
+    gap: 1em;
+}

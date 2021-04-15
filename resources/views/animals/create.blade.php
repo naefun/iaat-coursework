@@ -40,6 +40,14 @@
                             <input type="date" name="date_of_birth" />
                         </div>
                         <div class="form-input justify-content-center">
+                            <label>Animal type</label>
+                            <select name="animal_type">
+                                @foreach ($values as $value)
+                                    <option value="{{ $value }}">{{ $value }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="form-input justify-content-center">
                             <label >Description</label>
                             <textarea rows="4" cols="50" name="description">Notes about the animal</textarea>
                         </div>

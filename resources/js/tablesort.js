@@ -49,8 +49,10 @@ document.querySelectorAll(".table-sortable th").forEach(headerCell => {
 
 function searchTable(){
   const searchInput = document.getElementById("search");
+
   const rows = document.querySelectorAll("tbody tr");
   console.log(rows);
+
   searchInput.addEventListener("keyup", function (event) {
     const q = event.target.value.toLowerCase().trim();
     rows.forEach((row) => {
@@ -59,6 +61,7 @@ function searchTable(){
         : (row.style.display = "none");
     });
   });
+
 }
 
 // check if there is a search element before running the above function
@@ -68,3 +71,33 @@ if(searchElement != null){
 }
 
 //https://github.com/akjasim/cb_js_filter-table/blob/master/index.html
+
+
+function dropdownsearchTable(){
+  const dropdownSearchInput = document.getElementById("dropdown-search");
+
+  const rows = document.querySelectorAll("tbody tr");
+  console.log(rows);
+
+  dropdownSearchInput.addEventListener("click", function () {
+    if(dropdownSearchInput.value == ""){
+      rows.forEach((row) => {
+        row.style.display = "table-row"
+      });
+      return;
+    }
+    rows.forEach((row) => {
+      var cols = row.querySelectorAll("td");
+      cols[1].textContent.toLowerCase() == dropdownSearchInput.value
+      ? (row.style.display = "table-row")
+      : (row.style.display = "none");
+    });
+  });
+
+}
+
+// check if there is a search element before running the above function
+var dropdownSearchElement = document.getElementById("dropdown-search");
+if(dropdownSearchElement != null){
+  dropdownsearchTable();
+}
