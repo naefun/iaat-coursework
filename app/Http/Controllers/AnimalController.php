@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Animal;
 use App\Models\User;
 use Gate;
+use Auth;
 
 
 class AnimalController extends Controller
@@ -18,6 +19,10 @@ class AnimalController extends Controller
     public function index()
     {
         //
+        if (!Auth::check()) {
+            // The user is logged in...
+            return redirect('login');
+        }
         $animals = Animal::all();
         $people = User::all();
         if (Gate::denies('displayall')) {
@@ -34,6 +39,10 @@ class AnimalController extends Controller
     public function create()
     {
         //
+        if (!Auth::check()) {
+            // The user is logged in...
+            return redirect('login');
+        }
         return view('animals.create');
     }
 
@@ -46,6 +55,10 @@ class AnimalController extends Controller
     public function store(Request $request)
     {
         //
+        if (!Auth::check()) {
+            // The user is logged in...
+            return redirect('login');
+        }
         // form validation
         $animal = $this->validate(request(), [
             'name' => 'required',
@@ -92,6 +105,10 @@ class AnimalController extends Controller
      */
     public function show($id)
     {
+        if (!Auth::check()) {
+            // The user is logged in...
+            return redirect('login');
+        }
         //
         $animal = Animal::find($id);
         $people = User::all();
@@ -106,6 +123,10 @@ class AnimalController extends Controller
      */
     public function edit($id)
     {
+        if (!Auth::check()) {
+            // The user is logged in...
+            return redirect('login');
+        }
         //
         $animal = Animal::find($id);
         return view('animals.edit',compact('animal'));
@@ -120,6 +141,10 @@ class AnimalController extends Controller
      */
     public function update(Request $request, $id)
     {
+        if (!Auth::check()) {
+            // The user is logged in...
+            return redirect('login');
+        }
         //
         $animal = Animal::find($id);
         $this->validate(request(), [
@@ -161,6 +186,10 @@ class AnimalController extends Controller
     public function destroy($id)
     {
         //
+        if (!Auth::check()) {
+            // The user is logged in...
+            return redirect('login');
+        }
         $animal = Animal::find($id);
         $animal->delete();
         return redirect('animals');

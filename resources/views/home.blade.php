@@ -26,20 +26,23 @@
                     </div><br />
                 @endif
 
-                <table class="table table-striped table-hover">
+                <input class="search-box form-control" type="text" name="search" id="search" placeholder="Search..." />
+                <table class="table table-striped table-hover table-sortable">
                     {{-- if the user is a regular user --}}
                     @if(Auth::user()->role == false)
                         <thead>
                             <tr>
+                                {{-- headings --}}
                                 <th scope="col">Name</th>
                                 <th scope="col">DOB</th>
                                 <th scope="col">Availability</th>
-                                <th scope="col">Action</th>
+                                <th id="no-sort" scope="col">Action</th>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach($homeInformation as $info)
                                     <tr>
+                                        {{-- data --}}
                                         <td scope="row">{{$info['name']}}</td>
                                         <td>{{$info['date_of_birth']}}</td>
                                         <td>{{$info['availability']}}</td>
@@ -54,18 +57,20 @@
                     @else
                         <thead>
                             <tr>
+                                {{-- headings --}}
                                 <th scope="col"> Requesters name</th>
                                 <th scope="col"> Animal name</th>
                                 <th scope="col"> Request status</th>
-                                <th scope="col"> Actions</th>
+                                <th id="no-sort" scope="col"> Actions</th>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach($homeInformation as $info)
                                 <tr>
+                                    {{-- data --}}
                                     @foreach($people as $person)
                                         @if($person->id == $info->user_id)
-                                            <th scope="row"> {{$person->name}} </th>
+                                            <td scope="row"> {{$person->name}} </td>
                                         @endif
                                     @endforeach
                                     @foreach($animals as $animal)

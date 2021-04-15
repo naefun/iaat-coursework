@@ -96,6 +96,11 @@
         <main class="main">
             @yield('content')
         </main>
+
     </div>
+    <script src="{{ asset('js/tablesort.js') }}" defer></script>
 </body>
+<script>
+ 
+</script>
 </html>

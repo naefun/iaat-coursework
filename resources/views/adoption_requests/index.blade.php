@@ -12,7 +12,8 @@
                             {{ session('status') }}
                         </div>
                     @endif
-                    <table class="table table-striped table-hover">
+                    <input class="search-box form-control" type="text" name="search" id="search" placeholder="Search for a request..." />
+                    <table class="table table-striped table-hover table-sortable">
                         <thead>
                             <tr>
                                 <th scope="col"> Requesters name</th>
@@ -26,7 +27,7 @@
                                 <tr>
                                     @foreach($people as $person)
                                         @if($person->id == $adoptionRequest->user_id)
-                                            <th scope="row"> {{$person->name}} </th>
+                                            <td scope="row"> {{$person->name}} </td>
                                         @endif
                                     @endforeach
                                     @foreach($animals as $animal)

@@ -120,9 +120,6 @@ table:not(.show-table) tr:hover {
     flex-direction: column;
     width:100%;
 }
-.animal-description th,td{
-    width: 100%;
-}
 .end-text{
     text-align: end;
 }
@@ -130,7 +127,12 @@ table:not(.show-table) tr:hover {
     width: 50%;
 }
 .full-width{
-    max-width:100%
+    max-width:100%;
+    text-align: center;
+}
+.full-width-row{
+    width:100%;
+    text-align: center;
 }
 .full-height{
     max-height:100%
@@ -204,3 +206,32 @@ table:not(.show-table) tr:hover {
 .form-input{
     gap:0.5em;
 }
+
+.table-sortable th {
+    cursor: pointer;
+  }
+  
+  .table-sortable .th-sort-asc::after {
+    content: "\25b4";
+  }
+  
+  .table-sortable .th-sort-desc::after {
+    content: "\25be";
+  }
+  
+  .table-sortable .th-sort-asc::after,
+  .table-sortable .th-sort-desc::after {
+    margin-left: 5px;
+  }
+  
+  .table-sortable .th-sort-asc,
+  .table-sortable .th-sort-desc {
+    background: rgba(0, 0, 0, 0.1);
+  }
+  #no-sort{
+      cursor: default;
+  }
+  .search-box{
+      margin: 0 0 1em 0;
+      max-width: 70%;
+  }

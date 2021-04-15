@@ -8,6 +8,7 @@ use App\Models\Animal;
 use App\Models\User;
 use Illuminate\Support\Facades\DB;
 use Gate;
+use Auth;
 
 class AdoptionRequestController extends Controller
 {
@@ -19,6 +20,11 @@ class AdoptionRequestController extends Controller
     public function index()
     {
         //
+        if (!Auth::check()) {
+            // The user is logged in...
+            return redirect('login');
+        }
+        
         $adoptionRequests = AdoptionRequest::all();
         $people = User::all();
         $animals = Animal::all();
@@ -36,6 +42,11 @@ class AdoptionRequestController extends Controller
     public function create(Request $id)
     {
         //
+        if (!Auth::check()) {
+            // The user is logged in...
+            return redirect('login');
+        }
+
         $animal = Animal::find($id);
         return view('adoption_requests.create',compact('animal'));
     }
@@ -49,6 +60,11 @@ class AdoptionRequestController extends Controller
     public function store(Request $request)
     {
         //
+        if (!Auth::check()) {
+            // The user is logged in...
+            return redirect('login');
+        }
+
         // form validation
         $adoption_request = $this->validate(request(), [
             'user_id' => 'required',
@@ -108,6 +124,11 @@ class AdoptionRequestController extends Controller
     public function update(Request $request, $id)
     {
         //
+        if (!Auth::check()) {
+            // The user is logged in...
+            return redirect('login');
+        }
+
         $adoption_request = AdoptionRequest::find($id);
         $this->validate(request(), [
             'request_status' => 'required'
@@ -140,6 +161,11 @@ class AdoptionRequestController extends Controller
     public function destroy($id)
     {
         //
+        if (!Auth::check()) {
+            // The user is logged in...
+            return redirect('login');
+        }
+        
         $adoptionRequest = AdoptionRequest::find($id);
         $adoptionRequest->delete();
         return redirect('adoption_requests');

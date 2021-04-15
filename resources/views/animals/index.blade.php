@@ -1,5 +1,7 @@
 @extends('layouts.app')
 @section('content')
+@guest
+@else
     <div class="container">
         <div class="row justify-content-center">
 
@@ -8,22 +10,27 @@
                 <div class="card-header">Animals</div>
 
                 <div class="card-body justify-content-center table-responsive">
-                    <table class="table table-striped table-hover">
+                    <input class="search-box form-control" type="text" name="search" id="search" placeholder="Search for an animal..." />
+                    <!-- table start -->
+                    <table class="table table-striped table-hover table-sortable">
                         <thead>
                             <tr>
+                                <!-- table headers -->
                                 <th scope="col">Name</th>
                                 <th scope="col">DOB</th>
                                 <th scope="col">Availability</th>
                                 @if(Auth::user()->role == true)<th>Owner</th>@endif
-                                <th scope="col">Action</th>
+                                <th id="no-sort" scope="col">Action</th>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach($animals as $animal)
                                 <tr> 
-                                    <th scope="row">{{$animal['name']}}</th>
+                                    <!-- table data -->
+                                    <td scope="row">{{$animal['name']}}</td>
                                     <td>{{$animal['date_of_birth']}}</td>
                                     <td>{{$animal['availability']}}</td>
+
                                     @if(Auth::user()->role == true)
                                         @if($animal['user_id'] == null)
                                             <td></td>
@@ -35,10 +42,13 @@
                                             @endforeach
                                         @endif
                                     @endif
-                                    <td><a href="{{route('animals.show', ['animal' => $animal['id'] ] )}}" class="btn table-button">Details</a></td>
-                                    @if(Auth::user()->role == false)
-                                        <td><a href="{{ route('adoption_requests.create', ['animal' => $animal['id']]) }}" class="btn table-button">Create adoption request</a></td>
-                                    @else
+                                    
+                                    <td>
+                                        <a href="{{route('animals.show', ['animal' => $animal['id'] ] )}}" class="btn table-button">Details</a>
+                                        @if(Auth::user()->role == false)
+                                            <a href="{{ route('adoption_requests.create', ['animal' => $animal['id']]) }}" class="btn table-button">Create adoption request</a>
+                                        @else
+                                    </td>
                                         {{--
                                         <td><a href="{{ route('animals.edit', ['animal' => $animal['id']]) }}" class="btn btnwarning">Edit</a></td>
                                         <td>
@@ -59,4 +69,5 @@
             </div>
         </div>
     </div>
+@endguest
 @endsection

@@ -7,6 +7,7 @@ use App\Models\AdoptionRequest;
 use App\Models\Animal;
 use App\Models\User;
 use Gate;
+use Auth;
 
 class HomeController extends Controller
 {
@@ -27,6 +28,10 @@ class HomeController extends Controller
      */
     public function index()
     {
+        if (!Auth::check()) {
+            // The user is logged in...
+            return redirect('login');
+        }
         $homeInformation = AdoptionRequest::all()->where('request_status', 'pending');
         $people = User::all();
         $animals = Animal::all();
