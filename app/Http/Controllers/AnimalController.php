@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Models\Animal;
 use App\Models\User;
 use Gate;
+use Auth;
+use DB;
 
 
 class AnimalController extends Controller
@@ -18,12 +20,17 @@ class AnimalController extends Controller
     public function index()
     {
         //
+        if (!Auth::check()) {
+            // The user is logged in...
+            return redirect('login');
+        }
         $animals = Animal::all();
         $people = User::all();
+        $animalTypes = Animal::getAnimalTypes();
         if (Gate::denies('displayall')) {
             $animals=$animals->where('availability', 'available');
         }
-        return view('animals.index', compact('animals', 'people'));
+        return view('animals.index', compact('animals', 'people', 'animalTypes'));
     }
 
     /**
@@ -34,7 +41,14 @@ class AnimalController extends Controller
     public function create()
     {
         //
-        return view('animals.create');
+        if (!Auth::check()) {
+            // The user is logged in...
+            return redirect('login');
+        }
+        // gathers all enum options for the animal type so they can be used to generate the options on the form
+        $values = Animal::getAnimalTypes();
+
+        return view('animals.create',compact('values'));
     }
 
     /**
@@ -46,36 +60,49 @@ class AnimalController extends Controller
     public function store(Request $request)
     {
         //
+        if (!Auth::check()) {
+            // The user is logged in...
+            return redirect('login');
+        }
         // form validation
         $animal = $this->validate(request(), [
             'name' => 'required',
             'date_of_birth' => 'required|date',
-            'image' => 'sometimes|image|mimes:jpeg,png,jpg,gif,svg|max:500',
+            'image' => 'sometimes',
+            'image.*' => 'mimes:jpeg,png,jpg,gif,svg|max:500',
+            'animal_type' => 'required',
         ]);
-
-        //Handles the uploading of the image
+        
+        //Handles the uploading of multiple images
         if ($request->hasFile('image')){
-            //Gets the filename with the extension
-            $fileNameWithExt = $request->file('image')->getClientOriginalName();
-            //just gets the filename
-            $filename = pathinfo($fileNameWithExt, PATHINFO_FILENAME);
-            //Just gets the extension
-            $extension = $request->file('image')->getClientOriginalExtension();
-            //Gets the filename to store
-            $fileNameToStore = $filename.'_'.time().'.'.$extension;
-            //Uploads the image
-            $path = $request->file('image')->storeAs('public/images', $fileNameToStore);
+            $images = "";
+            // iterates through the given images
+            foreach ($request->image as $file) {
+                //Gets the filename with the extension
+                $fileNameWithExt = $file->getClientOriginalName();
+                //just gets the filename
+                $filename = pathinfo($fileNameWithExt, PATHINFO_FILENAME);
+                //Just gets the extension
+                $extension = $file->getClientOriginalExtension();
+                //Gets the filename to store
+                $fileNameToStore = $filename.'_'.time().'.'.$extension;
+                //add image names to string for easy storage in the database
+                $images = $images . $fileNameToStore . ",";
+                //Uploads the image
+                $path = $file->storeAs('public/images', $fileNameToStore);
+            }
         }
         else {
-            $fileNameToStore = 'noimage.jpg';
+            $images = 'noimage.jpg';
         }
 
         // create a Animal object and set its values from the input
         $animal = new Animal;
         $animal->name = $request->input('name');
         $animal->date_of_birth = $request->input('date_of_birth');
+        $animal->type = $request->input('animal_type');
         $animal->description = $request->input('description');
-        $animal->image = $fileNameToStore;
+        $animal->image = $images;
         //$animal->availability = $request->input('availability');
         $animal->created_at = now();
         // save the Vehicle object
@@ -92,6 +119,10 @@ class AnimalController extends Controller
      */
     public function show($id)
     {
+        if (!Auth::check()) {
+            // The user is logged in...
+            return redirect('login');
+        }
         //
         $animal = Animal::find($id);
         $people = User::all();
@@ -106,6 +137,10 @@ class AnimalController extends Controller
      */
     public function edit($id)
     {
+        if (!Auth::check()) {
+            // The user is logged in...
+            return redirect('login');
+        }
         //
         $animal = Animal::find($id);
         return view('animals.edit',compact('animal'));
@@ -120,6 +155,10 @@ class AnimalController extends Controller
      */
     public function update(Request $request, $id)
     {
+        if (!Auth::check()) {
+            // The user is logged in...
+            return redirect('login');
+        }
         //
         $animal = Animal::find($id);
         $this->validate(request(), [
@@ -161,6 +200,10 @@ class AnimalController extends Controller
     public function destroy($id)
     {
         //
+        if (!Auth::check()) {
+            // The user is logged in...
+            return redirect('login');
+        }
         $animal = Animal::find($id);
         $animal->delete();
         return redirect('animals');

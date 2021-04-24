@@ -8,6 +8,7 @@ use App\Models\Animal;
 use App\Models\User;
 use Illuminate\Support\Facades\DB;
 use Gate;
+use Auth;
 
 class AdoptionRequestController extends Controller
 {
@@ -19,6 +20,11 @@ class AdoptionRequestController extends Controller
     public function index()
     {
         //
+        if (!Auth::check()) {
+            // The user is logged in...
+            return redirect('login');
+        }
+        
         $adoptionRequests = AdoptionRequest::all();
         $people = User::all();
         $animals = Animal::all();
@@ -36,6 +42,11 @@ class AdoptionRequestController extends Controller
     public function create(Request $id)
     {
         //
+        if (!Auth::check()) {
+            // The user is logged in...
+            return redirect('login');
+        }
+
         $animal = Animal::find($id);
         return view('adoption_requests.create',compact('animal'));
     }
@@ -49,6 +60,11 @@ class AdoptionRequestController extends Controller
     public function store(Request $request)
     {
         //
+        if (!Auth::check()) {
+            // The user is logged in...
+            return redirect('login');
+        }
+
         // form validation
         $adoption_request = $this->validate(request(), [
             'user_id' => 'required',
@@ -71,7 +87,7 @@ class AdoptionRequestController extends Controller
             // generate a redirect HTTP response with a success message
             return back()->with('success', 'Adoption request has been added');
         }
-        return back()->with('success', 'Adoption request not added, you have already requested to adopt this animal');
+        return back()->with('nosuccess', 'Adoption request not added, you have already requested to adopt this animal');
 
     }
 
@@ -108,10 +124,19 @@ class AdoptionRequestController extends Controller
     public function update(Request $request, $id)
     {
         //
+        if (!Auth::check()) {
+            // The user is logged in...
+            return redirect('login');
+        }
+
         $adoption_request = AdoptionRequest::find($id);
         $this->validate(request(), [
             'request_status' => 'required'
         ]);
+        // stop request from being approved if the animal is already adopted
+        if(Animal::find($adoption_request->animal_id)->availability == 'unavailable' && $request->input('request_status') == 'approved'){
+            return back()->with('nosuccess', 'Adoption request cannot be accepted, this animal has already been adopted');
+        }
         $adoption_request->request_status = $request->input('request_status');
         $adoption_request->updated_at = now();
 
@@ -122,9 +147,9 @@ class AdoptionRequestController extends Controller
             $requested_animal->availability = "unavailable";
             $requested_animal->user_id = $adoption_request->user_id;
             $requested_animal->save();
-            return back()->with('success', 'Adoption request accepted');
+            return back()->with('success', 'Adoption request successfully accepted');
         }
-        return back()->with('success', 'Adoption request denied');
+        return back()->with('success', 'Adoption request successfully denied');
     }
 
     /**
@@ -136,6 +161,11 @@ class AdoptionRequestController extends Controller
     public function destroy($id)
     {
         //
+        if (!Auth::check()) {
+            // The user is logged in...
+            return redirect('login');
+        }
+        
         $adoptionRequest = AdoptionRequest::find($id);
         $adoptionRequest->delete();
         return redirect('adoption_requests');
@@ -143,8 +173,7 @@ class AdoptionRequestController extends Controller
 
     public function display()
     {
-        // sdd
-        
+        // empty
     }
 
 }

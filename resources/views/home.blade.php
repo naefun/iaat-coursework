@@ -3,49 +3,74 @@
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">{{ __('Dashboard') }}</div>
 
-                <div class="card-body">
-                    @if (session('status'))
-                        <div class="alert alert-success" role="alert">
-                            {{ session('status') }}
-                        </div>
-                    @endif
-                    <table>
-                        {{ __('You are logged in!') }}
-                        {{-- if the user is a regular user --}}
-                        @if(Auth::user()->role == false)
-                            <thead>
-                                <tr>
-                                    <th>Name</th>
-                                    <th>DOB</th>
-                                    <th>Availability</th>
-                                    <th colspan="3">Action</th>
-                                </tr>
-                            </thead>
+        <div class="card justify-content-center">
+            
+            <div class="card-header">{{ __('Dashboard') }}</div>
+
+            <div class="card-body justify-content-center">
+                @if (session('status'))
+                    <div class="alert alert-success" role="alert">
+                        {{ session('status') }}
+                    </div>
+                @endif
+
+                <!-- display the success status -->
+                @if (\Session::has('success'))
+                    <div class="alert alert-success">
+                        <p>{{ \Session::get('success') }}</p>
+                    </div><br />
+                @elseif (\Session::has('nosuccess'))
+                    <div class="alert alert-nosuccess">
+                        <p>{{ \Session::get('nosuccess') }}</p>
+                    </div><br />
+                @endif
+
+                <input class="search-box form-control" type="text" name="search" id="search" placeholder="Search..." />
+                <table class="table table-striped table-hover table-sortable">
+                    {{-- if the user is a public user --}}
+                    @if(Auth::user()->role == false)
+                        <thead>
+                            <tr>
+                                {{-- headings --}}
+                                <th scope="col">Name</th>
+                                <th scope="col">DOB</th>
+                                <th scope="col">Availability</th>
+                                <th id="no-sort" scope="col">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
                             @foreach($homeInformation as $info)
                                     <tr>
-                                        <td>{{$info['name']}}</td>
+                                        {{-- data --}}
+                                        <td scope="row">{{$info['name']}}</td>
                                         <td>{{$info['date_of_birth']}}</td>
                                         <td>{{$info['availability']}}</td>
-                                        <td><a href="{{ route('animals.show', ['animal' => $info['id'] ] ) }}" class="btn btnprimary">Details</a></td>
-                                        <td><a href="{{ route('adoption_requests.create', ['animal' => $info['id']]) }}" class="btn btnwarning">Create adoption request</a></td>
+                                        <td>
+                                            <a href="{{ route('animals.show', ['animal' => $info['id'] ] ) }}" class="btn table-button">Details</a>
+                                            <a href="{{ route('adoption_requests.create', ['animal' => $info['id']]) }}" class="btn table-button">Create adoption request</a>
+                                        </td>
                                     </tr>
                             @endforeach
-                        {{-- if the user is an admin --}}
-                        @else
-                            <thead>
-                                <tr>
-                                    <th> Requesters name</th><th> Animal name</th><th> Request status</th><th> Actions</th>
-                                </tr>
-                            </thead>
+                        </tbody>
+                    {{-- if the user is a staff user --}}
+                    @else
+                        <thead>
+                            <tr>
+                                {{-- headings --}}
+                                <th scope="col"> Requesters name</th>
+                                <th scope="col"> Animal name</th>
+                                <th scope="col"> Request status</th>
+                                <th id="no-sort" scope="col"> Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
                             @foreach($homeInformation as $info)
                                 <tr>
+                                    {{-- data --}}
                                     @foreach($people as $person)
                                         @if($person->id == $info->user_id)
-                                            <td> {{$person->name}} </td>
+                                            <td scope="row"> {{$person->name}} </td>
                                         @endif
                                     @endforeach
                                     @foreach($animals as $animal)
@@ -54,36 +79,29 @@
                                         @endif
                                     @endforeach
                                     <td> {{$info->request_status}} </td> 
-                                    <td> 
+                                    <td class="flex-row action-buttons"> 
                                         <form action="{{ action([App\Http\Controllers\AdoptionRequestController::class, 'update'],
                                         ['adoption_request' => $info['id']]) }}" method="post"> 
                                             @method('PATCH')
                                             @csrf
                                             <input name="request_status" type="hidden" value="approved">
-                                            <button class="btn btn-danger" type="submit"> Accept request</button>
+                                            <button class="btn green-button" type="submit">Accept</button>
                                         </form>
                                         <form action="{{ action([App\Http\Controllers\AdoptionRequestController::class, 'update'],
                                         ['adoption_request' => $info['id']]) }}" method="post"> 
                                             @method('PATCH')
                                             @csrf
                                             <input name="request_status" type="hidden" value="denied">
-                                            <button class="btn btn-danger" type="submit"> Deny request</button>
+                                            <button class="btn red-button" type="submit">Deny</button>
                                         </form>
-                                        {{--
-                                        <form action="{{ action([App\Http\Controllers\AdoptionRequestController::class, 'destroy'],
-                                        ['adoption_request' => $info['id']]) }}" method="post">
-                                            @csrf
-                                            <input name="_method" type="hidden" value="DELETE">
-                                            <button class="btn btn-danger" type="submit"> Delete</button>
-                                        </form>
-                                        --}}
                                     </td>
                                 </tr>
                             @endforeach
-                        @endif
-                    </table>
-                </div>
+                        </tbody>
+                    @endif
+                </table>
             </div>
+
         </div>
     </div>
 </div>
