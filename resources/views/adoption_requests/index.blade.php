@@ -19,7 +19,6 @@
                                 <th scope="col"> Requesters name</th>
                                 <th scope="col"> Animal name</th>
                                 <th scope="col"> Request status</th>
-                                {{--@if(Auth::user()->role == true)<th> Actions</th>@endif--}}
                             </tr>
                         </thead>
                         <tbody>
@@ -45,33 +44,6 @@
                                             <div class="status-circle"></div>
                                         @endif
                                     </td> 
-
-                                    {{--
-                                    @if(Auth::user()->role == true)
-                                        <td>
-                                            <form action="{{ action([App\Http\Controllers\AdoptionRequestController::class, 'update'],
-                                            ['adoption_request' => $adoptionRequest['id']]) }}" method="post"> 
-                                                @method('PATCH')
-                                                @csrf
-                                                <input name="request_status" type="hidden" value="approved">
-                                                <button class="btn btn-danger" type="submit"> Accept request</button>
-                                            </form>
-                                            <form action="{{ action([App\Http\Controllers\AdoptionRequestController::class, 'update'],
-                                            ['adoption_request' => $adoptionRequest['id']]) }}" method="post"> 
-                                                @method('PATCH')
-                                                @csrf
-                                                <input name="request_status" type="hidden" value="denied">
-                                                <button class="btn btn-danger" type="submit"> Deny request</button>
-                                            </form>
-                                            <form action="{{ action([App\Http\Controllers\AdoptionRequestController::class, 'destroy'],
-                                            ['adoption_request' => $adoptionRequest['id']]) }}" method="post">
-                                                @csrf
-                                                <input name="_method" type="hidden" value="DELETE">
-                                                <button class="btn btn-danger" type="submit"> Delete</button>
-                                            </form>
-                                        </td>
-                                    @endif
-                                    --}}
                                 </tr>
                             @endforeach
                         </tbody>

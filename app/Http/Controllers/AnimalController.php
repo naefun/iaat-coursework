@@ -68,25 +68,32 @@ class AnimalController extends Controller
         $animal = $this->validate(request(), [
             'name' => 'required',
             'date_of_birth' => 'required|date',
-            'image' => 'sometimes|image|mimes:jpeg,png,jpg,gif,svg|max:500',
+            'image' => 'sometimes',
+            'image.*' => 'mimes:jpeg,png,jpg,gif,svg|max:500',
             'animal_type' => 'required',
         ]);
-
-        //Handles the uploading of the image
+        
+        //Handles the uploading of multiple images
         if ($request->hasFile('image')){
-            //Gets the filename with the extension
-            $fileNameWithExt = $request->file('image')->getClientOriginalName();
-            //just gets the filename
-            $filename = pathinfo($fileNameWithExt, PATHINFO_FILENAME);
-            //Just gets the extension
-            $extension = $request->file('image')->getClientOriginalExtension();
-            //Gets the filename to store
-            $fileNameToStore = $filename.'_'.time().'.'.$extension;
-            //Uploads the image
-            $path = $request->file('image')->storeAs('public/images', $fileNameToStore);
+            $images = "";
+            // iterates through the given images
+            foreach ($request->image as $file) {
+                //Gets the filename with the extension
+                $fileNameWithExt = $file->getClientOriginalName();
+                //just gets the filename
+                $filename = pathinfo($fileNameWithExt, PATHINFO_FILENAME);
+                //Just gets the extension
+                $extension = $file->getClientOriginalExtension();
+                //Gets the filename to store
+                $fileNameToStore = $filename.'_'.time().'.'.$extension;
+                //add image names to string for easy storage in the database
+                $images = $images . $fileNameToStore . ",";
+                //Uploads the image
+                $path = $file->storeAs('public/images', $fileNameToStore);
+            }
         }
         else {
-            $fileNameToStore = 'noimage.jpg';
+            $images = 'noimage.jpg';
         }
 
         // create a Animal object and set its values from the input
@@ -95,7 +102,7 @@ class AnimalController extends Controller
         $animal->date_of_birth = $request->input('date_of_birth');
         $animal->type = $request->input('animal_type');
         $animal->description = $request->input('description');
-        $animal->image = $fileNameToStore;
+        $animal->image = $images;
         //$animal->availability = $request->input('availability');
         $animal->created_at = now();
         // save the Vehicle object

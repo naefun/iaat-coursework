@@ -41,7 +41,7 @@
                         </div>
                         <div class="form-input justify-content-center">
                             <label>Animal type</label>
-                            <select name="animal_type">
+                            <select class="form-select" name="animal_type">
                                 @foreach ($values as $value)
                                     <option value="{{ $value }}">{{ $value }}</option>
                                 @endforeach
@@ -53,17 +53,8 @@
                         </div>
                         <div class="form-input justify-content-center">
                             <label>Image</label>
-                            <input type="file" name="image" placeholder="Image file" />
+                            <input type="file" name="image[]" placeholder="Image file" multiple/>
                         </div>
-                        {{--
-                        <div class="col-md-8">
-                            <label>Animal availability</label>
-                            <select name="availability" >
-                                <option value="available">Available</option>
-                                <option value="unavailable">Unavailable</option>
-                            </select>
-                        </div>
-                        --}}
                         <div class="button-group justify-content-center-row">
                             <input type="submit" class="btn green-button" />
                             <input type="reset" class="btn red-button" />

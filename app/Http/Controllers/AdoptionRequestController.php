@@ -173,8 +173,7 @@ class AdoptionRequestController extends Controller
 
     public function display()
     {
-        // sdd
-        
+        // empty
     }
 
 }

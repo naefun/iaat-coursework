@@ -29,14 +29,25 @@
 
                 <!-- show animal information -->
                 <div class="card-body justify-content-center">
-                    <table class="table show-table" >
+                    <table class="table show-table table-striped" >
                             <tr> <th class="end-text half-width">Animal name </th> <td class="half-width"> {{$animal->first()->name}}</td></tr>
                             <tr> <th class="end-text half-width">Animal date of birth </th> <td class="half-width">{{$animal->first()->date_of_birth}}</td></tr>
                             <tr> <th class="end-text half-width">Animal availability </th> <td class="half-width">{{$animal->first()->availability}}</td></tr>
                             <tr> <th class="end-text half-width">Adoptee </th> <td class="half-width">{{$animal->first()->user_id}}</td></tr>
-                            <tr> <th class="center-text">Notes </th></tr><tr> <td class="table-description">{{$animal->first()->description}}</td></tr>
-                            <tr> <td class="full-width"><img class="full-width full-height"
-                            src="{{ asset('storage/images/'.$animal->first()->image)}}"></td></tr>
+                            <tr class="justify-content-center full-width-row"> <th class="center-text full-width-row">Notes </th><td class="center-text full-width-row">{{$animal->first()->description}}</td></tr>
+                            <tr> 
+                                <td class="full-width-row">
+                                    <div class="justify-content-center-row carrousel-container">
+                                        <button class="carrousel-button carrousel-button-left" id="move-left"><i class="fas fa-chevron-circle-left"></i></button>
+                                            @foreach (explode(',', $animal->first()->image) as $img)
+                                                @if ($img != "")              
+                                                    <img class="full-width full-height carrousel-image image-hide" src="{{ asset('storage/images/'.$img)}}">
+                                                @endif
+                                            @endforeach
+                                        <button class="carrousel-button carrousel-button-right" id="move-right"><i class="fas fa-chevron-circle-right"></i></button>
+                                    </div>
+                                </td>
+                            </tr>
                     </table>
                 </div>
 

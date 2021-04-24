@@ -73,19 +73,26 @@ if(searchElement != null){
 //https://github.com/akjasim/cb_js_filter-table/blob/master/index.html
 
 
+// allows filtering of animals by animal type
 function dropdownsearchTable(){
+  // get the dropdown element
   const dropdownSearchInput = document.getElementById("dropdown-search");
 
+  // store an array of all table rows
   const rows = document.querySelectorAll("tbody tr");
   console.log(rows);
 
+  // add a click event to the dropdown element
   dropdownSearchInput.addEventListener("click", function () {
+    // if the selected dropdown value is empty then show all rows
     if(dropdownSearchInput.value == ""){
       rows.forEach((row) => {
         row.style.display = "table-row"
       });
       return;
     }
+    // for each of the rows, get the columns and check the value of second column "cols[1]" (this is where the animal type is stored)
+    // if the animal type is the same as the selected animal type from the dropdown, then show the row, otherwise do not show the row
     rows.forEach((row) => {
       var cols = row.querySelectorAll("td");
       cols[1].textContent.toLowerCase() == dropdownSearchInput.value
@@ -93,7 +100,6 @@ function dropdownsearchTable(){
       : (row.style.display = "none");
     });
   });
-
 }
 
 // check if there is a search element before running the above function

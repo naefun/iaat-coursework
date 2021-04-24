@@ -28,7 +28,7 @@
 
                 <input class="search-box form-control" type="text" name="search" id="search" placeholder="Search..." />
                 <table class="table table-striped table-hover table-sortable">
-                    {{-- if the user is a regular user --}}
+                    {{-- if the user is a public user --}}
                     @if(Auth::user()->role == false)
                         <thead>
                             <tr>
@@ -53,7 +53,7 @@
                                     </tr>
                             @endforeach
                         </tbody>
-                    {{-- if the user is an admin --}}
+                    {{-- if the user is a staff user --}}
                     @else
                         <thead>
                             <tr>
@@ -94,14 +94,6 @@
                                             <input name="request_status" type="hidden" value="denied">
                                             <button class="btn red-button" type="submit">Deny</button>
                                         </form>
-                                        {{--
-                                        <form action="{{ action([App\Http\Controllers\AdoptionRequestController::class, 'destroy'],
-                                        ['adoption_request' => $info['id']]) }}" method="post">
-                                            @csrf
-                                            <input name="_method" type="hidden" value="DELETE">
-                                            <button class="btn btn-danger" type="submit"> Delete</button>
-                                        </form>
-                                        --}}
                                     </td>
                                 </tr>
                             @endforeach

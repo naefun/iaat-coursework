@@ -13,7 +13,12 @@ const mix = require('laravel-mix');
 
 mix.js('resources/js/app.js', 'public/js')
     .js('resources/js/tablesort.js', 'public/js')
+    .js('resources/js/carrousel.js', 'public/js')
     .sass('resources/sass/app.scss', 'public/css')
-    .sourceMaps();
+    .sourceMaps()
+    .copy(
+        'node_modules/@fortawesome/fontawesome-free/webfonts',
+        'public/webfonts'
+    );
 
 mix.js('resources/js/app.js', 'dist').vue();

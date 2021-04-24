@@ -13,6 +13,7 @@
         "normalize.css": "^5.0.0"
     },
     "devDependencies": {
+        "@fortawesome/fontawesome-free": "^5.15.3",
         "axios": "^0.21",
         "bootstrap": "^4.0.0",
         "jquery": "^3.2",
