@@ -6,7 +6,7 @@
 
         <div class="card justify-content-center">
             
-            <div class="card-header">{{ __('Dashboard') }}</div>
+            <div class="card-header">{{ __('Home') }}</div>
 
             <div class="card-body justify-content-center">
                 @if (session('status'))
@@ -26,7 +26,17 @@
                     </div><br />
                 @endif
 
-                <input class="search-box form-control" type="text" name="search" id="search" placeholder="Search..." />
+                <div class="justify-content-center-row input-group">
+                    <input class="search-box form-control" type="text" name="search" id="search" placeholder="Search..." />
+                    @if(Auth::user()->role == false)
+                        <select name="animal_type" class="form-control" id="dropdown-search">
+                            <option value="">Animal type...</option>
+                            @foreach ($animalTypes as $animalType)
+                                <option value="{{ $animalType }}">{{ $animalType }}</option>
+                            @endforeach
+                        </select>
+                    @endif
+                </div>
                 <table class="table table-striped table-hover table-sortable">
                     {{-- if the user is a public user --}}
                     @if(Auth::user()->role == false)
@@ -34,6 +44,7 @@
                             <tr>
                                 {{-- headings --}}
                                 <th scope="col">Name</th>
+                                <th scope="col">Type</th>
                                 <th scope="col">DOB</th>
                                 <th scope="col">Availability</th>
                                 <th id="no-sort" scope="col">Action</th>
@@ -44,6 +55,7 @@
                                     <tr>
                                         {{-- data --}}
                                         <td scope="row">{{$info['name']}}</td>
+                                        <td>{{$info['type']}}</td>
                                         <td>{{$info['date_of_birth']}}</td>
                                         <td>{{$info['availability']}}</td>
                                         <td>

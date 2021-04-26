@@ -1,5 +1,6 @@
 /**
  * Sorts a HTML table.
+ * modified from code found at //https://codepen.io/dcode-software/pen/zYGOrzK
  * 
  * @param {HTMLTableElement} table The table to sort
  * @param {number} column The index of the column to sort
@@ -45,14 +46,19 @@ document.querySelectorAll(".table-sortable th").forEach(headerCell => {
   });
 });
 
-//https://codepen.io/dcode-software/pen/zYGOrzK
 
+/**
+ * Allows table to be searched using input
+ * modified from code found at https://github.com/akjasim/cb_js_filter-table/blob/master/index.html
+ */
 function searchTable(){
+  // get the search bar input element
   const searchInput = document.getElementById("search");
 
+  // get all rows from the table
   const rows = document.querySelectorAll("tbody tr");
-  console.log(rows);
 
+  // search the table for the entered word each time the user releases a key
   searchInput.addEventListener("keyup", function (event) {
     const q = event.target.value.toLowerCase().trim();
     rows.forEach((row) => {
@@ -70,17 +76,17 @@ if(searchElement != null){
   searchTable();
 }
 
-//https://github.com/akjasim/cb_js_filter-table/blob/master/index.html
 
-
-// allows filtering of animals by animal type
+/**
+ * allows filtering of animals by animal type
+ * 
+ */
 function dropdownsearchTable(){
   // get the dropdown element
   const dropdownSearchInput = document.getElementById("dropdown-search");
 
   // store an array of all table rows
   const rows = document.querySelectorAll("tbody tr");
-  console.log(rows);
 
   // add a click event to the dropdown element
   dropdownSearchInput.addEventListener("click", function () {

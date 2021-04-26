@@ -1,4 +1,6 @@
-<!-- inherite master template app.blade.php -->
+{{-- view used to create an adoption request --}}
+
+<!-- inherit master template app.blade.php -->
 @extends('layouts.app')
 <!-- define the content section -->
 @section('content')
@@ -56,15 +58,8 @@
                     <form class="form-horizontal" method="POST"
                     action="{{url('adoption_requests') }}" enctype="multipart/form-data">
                         @csrf
-                        <!-- 
-                            hidden animal id
-                            hidden user id
-                            show animal details
-                        -->
-                        
                         <input type="number" name="animal_id" placeholder="Animal name" value="{{ $animal->first()->id }}" hidden />
                         <input type="number" name="user_id" placeholder="Animal name" value="{{ Auth::user()->id }}" hidden />
-
                         <div class="button-group justify-content-center-row">
                             <a href="{{route('animals.index')}}" class="btn plain-button" role="button">Back to the list</a>
                             <input type="submit" class="btn plain-button" value="Submit adoption request"/>

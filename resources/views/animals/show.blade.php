@@ -30,6 +30,7 @@
                             <td class="full-width-row">
                                 <div class="justify-content-center-row carrousel-container">
                                     <button class="carrousel-button carrousel-button-left" id="move-left"><i class="fas fa-chevron-circle-left"></i></button>
+                                        {{-- parse the comma separated array of image names and display them --}}
                                         @foreach (explode(',', $animal->image) as $img)
                                             @if ($img != "")              
                                                 <img class="full-width full-height carrousel-image image-hide" src="{{ asset('storage/images/'.$img)}}">

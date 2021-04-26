@@ -49,11 +49,11 @@
                         </div>
                         <div class="form-input justify-content-center">
                             <label >Description</label>
-                            <textarea rows="4" cols="50" name="description">Notes about the animal</textarea>
+                            <textarea rows="4" cols="50" name="description" placeholder="Notes about the animal"></textarea>
                         </div>
                         <div class="form-input justify-content-center">
                             <label>Image</label>
-                            <input type="file" name="image[]" placeholder="Image file" multiple/>
+                            <input type="file" name="image[]" multiple/>
                         </div>
                         <div class="button-group justify-content-center-row">
                             <input type="submit" class="btn green-button" />

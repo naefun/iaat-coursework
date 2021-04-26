@@ -35,9 +35,10 @@ class HomeController extends Controller
         $homeInformation = AdoptionRequest::all()->where('request_status', 'pending');
         $people = User::all();
         $animals = Animal::all();
+        $animalTypes = Animal::getAnimalTypes();
         if (Gate::denies('displayall')) {
             $homeInformation=Animal::all()->where('availability', 'available');
         }
-        return view('home', compact('homeInformation', 'people', 'animals'));
+        return view('home', compact('homeInformation', 'people', 'animals', 'animalTypes'));
     }
 }
