@@ -11,7 +11,9 @@
 
                 <div class="card-body justify-content-center table-responsive">
                     <div class="justify-content-center-row input-group">
+                        <!-- search bar -->
                         <input class="search-box form-control" type="text" name="search" id="search" placeholder="Search for an animal..." />
+                        <!-- dropdown filter -->
                         <select name="animal_type" class="form-control" id="dropdown-search">
                             <option value="">Animal type...</option>
                             @foreach ($animalTypes as $animalType)
@@ -55,6 +57,7 @@
                                     
                                     <td>
                                         <a href="{{route('animals.show', ['animal' => $animal['id'] ] )}}" class="btn table-button">Details</a>
+                                        <!-- show adoption button if user is a public user -->
                                         @if(Auth::user()->role == false)
                                             <a href="{{ route('adoption_requests.create', ['animal' => $animal['id']]) }}" class="btn table-button">Create adoption request</a>
                                         @else

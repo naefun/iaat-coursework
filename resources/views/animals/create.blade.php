@@ -29,6 +29,7 @@
 
                     <form class="create-form justify-content-center" method="POST"
                     action="{{url('animals') }}" enctype="multipart/form-data">
+                        {{-- @csrf is used to ensure a csrf token is used to prevent cross-site request forgery --}}
                         @csrf
                         <div class="form-input justify-content-center">
                             <label>Animal name</label>
@@ -51,6 +52,7 @@
                             <label >Description</label>
                             <textarea rows="4" cols="50" name="description" placeholder="Notes about the animal"></textarea>
                         </div>
+                        <!-- input for image upload, multiple images can be uploaded as a result of the "multiple" attribute and the "image[]" name -->
                         <div class="form-input justify-content-center">
                             <label>Image</label>
                             <input type="file" name="image[]" multiple/>

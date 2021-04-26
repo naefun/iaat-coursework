@@ -1,3 +1,5 @@
+{{-- view allows for editing of animal entries, not used but kept in-case it is implemented further down the line --}}
+
 @extends('layouts.app')
 @section('content')
     <div class="container">
@@ -23,6 +25,7 @@
                         <form class="form-horizontal" method="POST" action="{{ route('animals.update', ['animal' =>
                         $animal['id']]) }}" enctype="multipart/form-data" >
                             @method('PATCH')
+                            {{-- @csrf is used to ensure a csrf token is used to prevent cross-site request forgery --}}
                             @csrf
                             <div class="col-md-8">
                                 <label>Animal name</label>

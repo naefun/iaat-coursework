@@ -41,6 +41,7 @@
                                 <td class="full-width-row">
                                     <div class="justify-content-center-row carrousel-container">
                                         <button class="carrousel-button carrousel-button-left" id="move-left"><i class="fas fa-chevron-circle-left"></i></button>
+                                            {{-- iterate through image names and display the corresponding images --}}
                                             @foreach (explode(',', $animal->first()->image) as $img)
                                                 @if ($img != "")              
                                                     <img class="full-width full-height carrousel-image image-hide" src="{{ asset('storage/images/'.$img)}}">
@@ -53,10 +54,11 @@
                     </table>
                 </div>
 
-                <!-- define the form -->
+                <!-- define the form to submit adoption requests -->
                 <div class="card-body justify-content-center">
                     <form class="form-horizontal" method="POST"
                     action="{{url('adoption_requests') }}" enctype="multipart/form-data">
+                        {{-- @csrf is used to ensure a csrf token is used to prevent cross-site request forgery --}}
                         @csrf
                         <input type="number" name="animal_id" placeholder="Animal name" value="{{ $animal->first()->id }}" hidden />
                         <input type="number" name="user_id" placeholder="Animal name" value="{{ Auth::user()->id }}" hidden />

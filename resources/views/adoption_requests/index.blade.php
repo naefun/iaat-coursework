@@ -12,7 +12,9 @@
                             {{ session('status') }}
                         </div>
                     @endif
+
                     <input class="max-width-70 form-control" type="text" name="search" id="search" placeholder="Search for a request..." />
+                    <!-- show adoption requests -->
                     <table class="table table-striped table-hover table-sortable">
                         <thead>
                             <tr>
@@ -22,6 +24,7 @@
                             </tr>
                         </thead>
                         <tbody>
+                            <!-- iterate through each adoption request and create a row from the data -->
                             @foreach($adoptionRequests as $adoptionRequest)
                                 <tr>
                                     @foreach($people as $person)

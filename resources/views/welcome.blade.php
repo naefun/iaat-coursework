@@ -13,11 +13,11 @@
         </div>
         <div class="card info-card">
             <div class="icon colour-red"><i class="fas fa-heart"></i></div>
-            <div class="text"><p>Lor provident pariatur repellat eum laudantium sit temporibus magni, quidem mollitia excepturi repudiandae aliquam tempore velit!</p></div>
+            <div class="text"><p>Every animal is different, that is why we spend countless hours with each animal to make sure we understand their needs so we can find them the perfect new home.</p></div>
         </div>
         <div class="card info-card">
             <div class="icon colour-green"><i class="fas fa-home"></i></div>
-            <div class="text"><p>Lorem ipsum dolor sit amet, consectetur arovident pariatur repellat eum laudantium sit temporibus magni, quidem mollitia excepturi repudiandae aliquam tempore velit!</p></div>
+            <div class="text"><p>All animals are house trained to ensure an easy transition from their life with us to their new life at their forever home.</p></div>
         </div>
     </div>
 </div>

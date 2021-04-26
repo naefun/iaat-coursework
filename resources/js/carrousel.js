@@ -1,6 +1,9 @@
+// stores the number of images
 var imageAmount;
+// the index of the current image being shown
 var currentImageIndex = 0;
 
+// initialises the carrousel and hides all images except the first image
 function carrouselController(){
     var container = document.getElementsByClassName("carrousel-container")[0];
     var carrouselImages = container.querySelectorAll("img");

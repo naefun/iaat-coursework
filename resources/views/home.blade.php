@@ -27,7 +27,9 @@
                 @endif
 
                 <div class="justify-content-center-row input-group">
+                    <!-- search bar -->
                     <input class="search-box form-control" type="text" name="search" id="search" placeholder="Search..." />
+                    <!-- display animal type filter if the user is a public user -->
                     @if(Auth::user()->role == false)
                         <select name="animal_type" class="form-control" id="dropdown-search">
                             <option value="">Animal type...</option>
@@ -37,8 +39,9 @@
                         </select>
                     @endif
                 </div>
+                <!-- display table -->
                 <table class="table table-striped table-hover table-sortable">
-                    {{-- if the user is a public user --}}
+                    {{-- if the user is a public user then display animal table --}}
                     @if(Auth::user()->role == false)
                         <thead>
                             <tr>
@@ -65,7 +68,7 @@
                                     </tr>
                             @endforeach
                         </tbody>
-                    {{-- if the user is a staff user --}}
+                    {{-- if the user is a staff user then display animal requests table --}}
                     @else
                         <thead>
                             <tr>
@@ -95,6 +98,7 @@
                                         <form action="{{ action([App\Http\Controllers\AdoptionRequestController::class, 'update'],
                                         ['adoption_request' => $info['id']]) }}" method="post"> 
                                             @method('PATCH')
+                                            {{-- @csrf is used to ensure a csrf token is used to prevent cross-site request forgery --}}
                                             @csrf
                                             <input name="request_status" type="hidden" value="approved">
                                             <button class="btn green-button" type="submit">Accept</button>
@@ -102,6 +106,7 @@
                                         <form action="{{ action([App\Http\Controllers\AdoptionRequestController::class, 'update'],
                                         ['adoption_request' => $info['id']]) }}" method="post"> 
                                             @method('PATCH')
+                                            {{-- @csrf is used to ensure a csrf token is used to prevent cross-site request forgery --}}
                                             @csrf
                                             <input name="request_status" type="hidden" value="denied">
                                             <button class="btn red-button" type="submit">Deny</button>
@@ -113,7 +118,6 @@
                     @endif
                 </table>
             </div>
-
         </div>
     </div>
 </div>
