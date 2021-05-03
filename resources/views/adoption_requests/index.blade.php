@@ -4,7 +4,7 @@
         <div class="row justify-content-center">
             <div class="card justify-content-center">
 
-                <div class="card-header">Dashboard</div>
+                <div class="card-header">Adoption requests</div>
 
                 <div class="card-body justify-content-center">
                     @if (session('status'))
@@ -12,7 +12,9 @@
                             {{ session('status') }}
                         </div>
                     @endif
-                    <input class="search-box form-control" type="text" name="search" id="search" placeholder="Search for a request..." />
+
+                    <input class="max-width-70 form-control" type="text" name="search" id="search" placeholder="Search for a request..." />
+                    <!-- show adoption requests -->
                     <table class="table table-striped table-hover table-sortable">
                         <thead>
                             <tr>
@@ -22,6 +24,7 @@
                             </tr>
                         </thead>
                         <tbody>
+                            <!-- iterate through each adoption request and create a row from the data -->
                             @foreach($adoptionRequests as $adoptionRequest)
                                 <tr>
                                     @foreach($people as $person)

@@ -73,7 +73,7 @@ class AnimalController extends Controller
             'animal_type' => 'required',
         ]);
         
-        //Handles the uploading of multiple images
+        //Handles the uploading of multiple images by storing each image locally and sending a comma separated value string of all image names to the database
         if ($request->hasFile('image')){
             $images = "";
             // iterates through the given images
@@ -103,9 +103,8 @@ class AnimalController extends Controller
         $animal->type = $request->input('animal_type');
         $animal->description = $request->input('description');
         $animal->image = $images;
-        //$animal->availability = $request->input('availability');
         $animal->created_at = now();
-        // save the Vehicle object
+        // save the animal object
         $animal->save();
         // generate a redirect HTTP response with a success message
         return back()->with('success', 'Animal has been added');

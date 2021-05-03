@@ -14,7 +14,7 @@ class CreateAnimalsTable extends Migration
     public function up()
     {
         /** 
-         * An animals should include: 
+         * An animal should include: 
          *      a name, 
          *      date of birth, 
          *      description, 

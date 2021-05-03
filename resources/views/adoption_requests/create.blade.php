@@ -1,4 +1,6 @@
-<!-- inherite master template app.blade.php -->
+{{-- view used to create an adoption request --}}
+
+<!-- inherit master template app.blade.php -->
 @extends('layouts.app')
 <!-- define the content section -->
 @section('content')
@@ -39,6 +41,7 @@
                                 <td class="full-width-row">
                                     <div class="justify-content-center-row carrousel-container">
                                         <button class="carrousel-button carrousel-button-left" id="move-left"><i class="fas fa-chevron-circle-left"></i></button>
+                                            {{-- iterate through image names and display the corresponding images --}}
                                             @foreach (explode(',', $animal->first()->image) as $img)
                                                 @if ($img != "")              
                                                     <img class="full-width full-height carrousel-image image-hide" src="{{ asset('storage/images/'.$img)}}">
@@ -51,20 +54,14 @@
                     </table>
                 </div>
 
-                <!-- define the form -->
+                <!-- define the form to submit adoption requests -->
                 <div class="card-body justify-content-center">
                     <form class="form-horizontal" method="POST"
                     action="{{url('adoption_requests') }}" enctype="multipart/form-data">
+                        {{-- @csrf is used to ensure a csrf token is used to prevent cross-site request forgery --}}
                         @csrf
-                        <!-- 
-                            hidden animal id
-                            hidden user id
-                            show animal details
-                        -->
-                        
                         <input type="number" name="animal_id" placeholder="Animal name" value="{{ $animal->first()->id }}" hidden />
                         <input type="number" name="user_id" placeholder="Animal name" value="{{ Auth::user()->id }}" hidden />
-
                         <div class="button-group justify-content-center-row">
                             <a href="{{route('animals.index')}}" class="btn plain-button" role="button">Back to the list</a>
                             <input type="submit" class="btn plain-button" value="Submit adoption request"/>

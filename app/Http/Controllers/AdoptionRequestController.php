@@ -21,7 +21,7 @@ class AdoptionRequestController extends Controller
     {
         //
         if (!Auth::check()) {
-            // The user is logged in...
+            // The user is not logged in...
             return redirect('login');
         }
         
@@ -82,7 +82,7 @@ class AdoptionRequestController extends Controller
             $adoption_request->user_id = $request->input('user_id');
             $adoption_request->animal_id = $request->input('animal_id');
             $adoption_request->created_at = now();
-            // save the Vehicle object
+            // save the animal object
             $adoption_request->save();
             // generate a redirect HTTP response with a success message
             return back()->with('success', 'Adoption request has been added');

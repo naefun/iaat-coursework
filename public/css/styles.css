@@ -237,7 +237,7 @@ background: rgba(0, 0, 0, 0.1);
 #no-sort{
     cursor: default;
 }
-.search-box{
+.max-width-70{
     max-width: 70%;
 }
 .input-group{
@@ -359,6 +359,8 @@ background: rgba(0, 0, 0, 0.1);
 }
 .footer-columns{
     justify-content: space-around;
+    flex-wrap: wrap;
+    gap: 1em;
 }
 .footer-column{
     color: #fff;
