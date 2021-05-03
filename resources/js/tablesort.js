@@ -1,10 +1,5 @@
 /**
  * Sorts a HTML table.
- * modified from code found at //https://codepen.io/dcode-software/pen/zYGOrzK
- * 
- * @param {HTMLTableElement} table The table to sort
- * @param {number} column The index of the column to sort
- * @param {boolean} asc Determines if the sorting will be in ascending
  */
 function sortTableByColumn(table, column, asc = true) {
   const dirModifier = asc ? 1 : -1;
@@ -49,7 +44,6 @@ document.querySelectorAll(".table-sortable th").forEach(headerCell => {
 
 /**
  * Allows table to be searched using input
- * modified from code found at https://github.com/akjasim/cb_js_filter-table/blob/master/index.html
  */
 function searchTable(){
   // get the search bar input element
